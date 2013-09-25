@@ -1,6 +1,6 @@
 === Olevmedia Shortcodes ===
 Contributors: Olevmedia
-Tags: shortcodes, visual, accordion, toggle, tab, tabs, border, button, buttons, columns, dropcaps, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
+Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, border, button, buttons, columns, dropcaps, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
 Requires at least: 3.5
 Tested up to: 3.6
 Stable tag: 1.0.0
