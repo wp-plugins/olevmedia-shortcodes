@@ -15,11 +15,11 @@ Olevmedia Shortcodes plugin adds a button to editor, which provides you plenty o
 
 * __Accordion__
 * __Toogle__
-* __Tabs__, (itís responsive)
+* __Tabs__, (it‚Äôs responsive)
 * __Blockquote__
 * __Border__
 * __Buttons__ (you can choose icons, colors, specify tooltips and much more)
-* __Columns__ (up to 1/6, also itís responsive)
+* __Columns__ (up to 1/6, also it‚Äôs responsive)
 * __Dropcaps__
 * __Icons__
 * __Infoboxes__ (small, big, with buttons)
@@ -29,13 +29,13 @@ Olevmedia Shortcodes plugin adds a button to editor, which provides you plenty o
 * __Marker__
 * __Recent Posts__
 * __Table__ (styling)
-* __Pricing tables__ (itís responsive)
+* __Pricing tables__ (it‚Äôs responsive)
 * __Video__ (insert responsive video from YouTube, Vimeo, etc.)
 * Few more shortcodes
 
 = Features =
 
-Plugin provides handy shortcodes generator interface, so you donít need to remember all codes, just click the button at the editor toolbar and get the shortcode!
+Plugin provides handy shortcodes generator interface, so you don‚Äôt need to remember all codes, just click the button at the editor toolbar and get the shortcode!
 
 Shortcodes layout is responsive, so they are nicely displayed on mobile devices.
 
@@ -47,16 +47,16 @@ Shortcodes layout is responsive, so they are nicely displayed on mobile devices.
 
 = Automatic installation =
 
-Automatic installation is the easiest option as WordPress handles the file transfers itself and you donít even need to leave your web browser. To do an automatic install of Olevmedia Shortcodes, log in to your WordPress admin panel, navigate to the Plugins menu and click Add New.
+Automatic installation is the easiest option as WordPress handles the file transfers itself and you don‚Äôt even need to leave your web browser. To do an automatic install of Olevmedia Shortcodes, log in to your WordPress admin panel, navigate to the Plugins menu and click Add New.
 
-In the search field type ìOlevmedia Shortcodesî and click Search Plugins. Once youíve found the plugin you can install it by simply clicking Install Now. After clicking that link you will be asked if youíre sure you want to install the plugin. Click yes and WordPress will automatically complete the installation.
+In the search field type ‚ÄúOlevmedia Shortcodes‚Äù and click Search Plugins. Once you‚Äôve found the plugin you can install it by simply clicking Install Now. After clicking that link you will be asked if you‚Äôre sure you want to install the plugin. Click yes and WordPress will automatically complete the installation.
 
 = Manual installation =
 
-The manual installation method involves downloading ìOlevmedia Shortcodesî plugin and uploading it to your webserver via FTP application.
+The manual installation method involves downloading ‚ÄúOlevmedia Shortcodes‚Äù plugin and uploading it to your webserver via FTP application.
 
 1. Download the plugin file to your computer and unzip it
-2. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installationís wp-content/plugins/ directory.
+2. Using an FTP program, or your hosting control panel, upload the unzipped plugin folder to your WordPress installation‚Äôs wp-content/plugins/ directory.
 3. Activate the plugin from the Plugins menu within the WordPress admin.
 
 = Upgrading =
