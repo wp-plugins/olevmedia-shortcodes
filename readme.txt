@@ -84,7 +84,7 @@ Automatic updates should work like a charm.
 * Border shortocode removed, use Box instead
 * Few minor fixes
 
-= 1.0.0
+= 1.0.0 =
 * Initial release
 
 == Upgrade Notice ==
