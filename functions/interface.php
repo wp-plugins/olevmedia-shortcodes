@@ -5,7 +5,7 @@ include_once('interface-shortcodes-generator.php');
 
 function omsc_admin_enqueue_scripts($hook){
 	
-	if( 'post.php' != $hook && 'post-new.php' != $hook )
+	if( 'post.php' != $hook && 'post-new.php' != $hook && 'widgets.php' != $hook )
 		return;
 
 	wp_enqueue_script('jquery');
@@ -37,6 +37,7 @@ function omsc_popup_callback() {
 			echo '</div>';
 		echo '</div>';
 	echo '</div>';
+	echo '<script>omsc_browse_button_init(".omsc-popup-wrapper");</script>';
 	echo omsc_shortcodes_js_generator($_POST['id']);
 	
 	exit();
@@ -91,7 +92,7 @@ function omsc_shortcodes_options($id) {
 						$line.= '</select>';
 						$line.= '<div class="omsc-popup-fontawesomepreview"><div class="omsc-popup-fontawesomepreview-title"><a href="#" id="omsc-popup-fontawesomepreview-link">'.__('Icons Preview','om_shortcodes').'</a></div><div class="omsc-popup-fontawesomepreview-content omsc-clearfix">';
 						foreach($icons as $v) {
-							$line .= '<div class="omsc-item" title="'.$v.'" data-icon="'.$v.'" data-option-id="'.$opt['id'].'"><i class="icon-'.$v.'"></i></div>';
+							$line .= '<div class="omsc-item" title="'.$v.'" data-icon="'.$v.'" data-option-id="'.$opt['id'].'"><i class="fa fa-'.$v.'"></i></div>';
 						}
 						$line.= '</div></div>';
 					break;				
@@ -135,6 +136,13 @@ function omsc_shortcodes_options($id) {
 					case 'color':
 						$line.= '
 							<input class="wp-color-picker-field" name="'. $opt['id'] .'" id="'. $opt['id'] .'" type="text" value="'. $opt['std'] .'"  data-default-color="'. $opt['std'] .'" />
+						';
+					break;
+
+					case 'text_browse':
+						$line.= '
+							<input class="widefat" style="width:75%" name="'. $opt['id'] .'" id="'. $opt['id'] .'" type="text" value="'. $opt['std'] .'" />
+							<a href="#" class="button omsc-browse-button" rel="'.$opt['id'].'"'.(@$opt['library']?' data-library="'.$opt['library'].'"':'').' data-choose="'.__('Choose a file','om_theme').'" data-select="'.__('Select','om_theme').'">'.__('Browse','om_theme').'</a>
 						';
 					break;
 /*						
@@ -184,7 +192,7 @@ function omsc_shortcodes_options($id) {
 	
 					break;
 
-/*					
+					
 					case 'portfolio_category':
 
 						$args = array(
@@ -206,7 +214,8 @@ function omsc_shortcodes_options($id) {
 						$line .= wp_dropdown_categories( $args );
 
 					break;
-					
+
+/*					
 					case 'testimonials_category':
 
 						$args = array(

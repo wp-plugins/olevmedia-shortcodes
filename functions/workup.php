@@ -41,7 +41,7 @@ add_action('wp_enqueue_scripts', 'omsc_enqueue_scripts');
  
 function omsc_shortcodes_js_init() {
 	
-	$modules=array('buttons', 'tooltips', 'toggle', 'tabs', 'responsivebox');
+	$modules=array('buttons', 'tooltips', 'toggle', 'tabs', 'responsivebox', 'counter');
 	$modules=apply_filters('omsc_shortcodes_js_init_modules', $modules);
 	
 	if(!empty($modules))

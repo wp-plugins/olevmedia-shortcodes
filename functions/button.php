@@ -4,7 +4,7 @@
 function omsc_admin_head() {
 	global $pagenow;
 	
-	if( 'post.php' != $pagenow && 'post-new.php' != $pagenow )
+	if( 'post.php' != $pagenow && 'post-new.php' != $pagenow && 'widgets.php' != $pagenow )
 		return;
 	
 	echo "<script type='text/javascript'>";
@@ -37,12 +37,16 @@ function omsc_admin_head() {
 			'type' => 'addPopup',
 		),
 */
+		'animation' => array(
+			'title' => __('Animation','om_shortcodes'),
+			'type' => 'addPopup',
+		),
 		'blockquote' => array(
 			'title' => __('Blockquote','om_shortcodes'),
 			'type' => 'addPopup',
 		),
-		'border' => array(
-			'title' => __('Border','om_shortcodes'),
+		'box' => array(
+			'title' => __('Box','om_shortcodes'),
 			'type' => 'addPopup',
 		),
 	
@@ -61,6 +65,11 @@ function omsc_admin_head() {
 			'title' => __('Columns','om_shortcodes'),
 			'type' => 'addPopup',
 		),
+
+		'counter' => array(
+			'title' => __('Counter','om_shortcodes'),
+			'type' => 'addPopup',
+		),
 		
 /*
 		'gallery' => array(
@@ -69,8 +78,18 @@ function omsc_admin_head() {
 		),
 */		
 	
+		'divider' => array(
+			'title' => __('Divider','om_shortcodes'),
+			'type' => 'addPopup',
+		),
+
 		'dropcaps' => array(
 			'title' => __('Dropcaps','om_shortcodes'),
+			'type' => 'addPopup',
+		),
+
+		'full_width' => array(
+			'title' => __('Full Width Section','om_shortcodes'),
 			'type' => 'addPopup',
 		),
 		'icons' => array(
@@ -123,17 +142,16 @@ function omsc_admin_head() {
 			'title' => __('Marker','om_shortcodes'),
 			'type' => 'addPopup',
 		),
+
+		'portfolio' => array(
+			'title' => __('Portfolio','om_shortcodes'),
+			'type' => 'addPopup',
+		),		
+		
 		'recent_posts' => array(
 			'title' => __('Recent Posts','om_shortcodes'),
 			'type' => 'addPopup',
 		),
-		
-/*
-		'portfolio' => array(
-			'title' => __('Recent Portfolios','om_shortcodes'),
-			'type' => 'addPopup',
-		),
-*/
 		
 		'table_group' => array(
 			'title' => __('Table','om_shortcodes'),
@@ -168,12 +186,6 @@ function omsc_admin_head() {
 			'title' => __('Utilities','om_shortcodes'),
 			'type' => 'parent',
 			'childs' => array (
-				'divider' => array(
-					'title' => __('Divider','om_shortcodes'),
-					'type' => 'addInsert',
-					'before' => '<hr/>',
-					'after' => '',
-				),
 				'clear' => array(
 					'title' => __('Float clearing','om_shortcodes'),
 					'type' => 'addInsert',
@@ -199,7 +211,19 @@ function omsc_admin_head() {
 	);
 	
 	$button_menu = apply_filters('omsc_shortcodes_button_menu', $button_menu);
+
+	$config=$GLOBALS['omShortcodesPlugin']['config'];
 	
+	if(!$config['theme_support']['full_width']) {
+		unset($button_menu['full_width']);
+	}
+	if(!$config['theme_support']['animation']) {
+		unset($button_menu['animation']);
+	}
+	if(!isset($GLOBALS['omPortfolioPlugin'])) {
+		unset($button_menu['portfolio']);
+	}
+		
 	echo 'var OMSC_PLUGIN_BUTTON_MENU='.json_encode($button_menu).';';
 	
 	echo '</script>';

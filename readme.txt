@@ -1,9 +1,9 @@
 === Olevmedia Shortcodes ===
 Contributors: Olevmedia
-Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, border, button, buttons, columns, dropcaps, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
+Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, box, button, buttons, counter, columns, dropcaps, divider, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 1.0.0
+Tested up to: 3.8
+Stable tag: 1.1.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -17,9 +17,11 @@ Olevmedia Shortcodes plugin adds a button to editor, which provides you plenty o
 * __Toogle__
 * __Tabs__, (it’s responsive)
 * __Blockquote__
-* __Border__
+* __Box__
 * __Buttons__ (you can choose icons, colors, specify tooltips and much more)
 * __Columns__ (up to 1/6, also it’s responsive)
+* __Counter__
+* __Divider__
 * __Dropcaps__
 * __Icons__
 * __Infoboxes__ (small, big, with buttons)
@@ -72,3 +74,20 @@ Automatic updates should work like a charm.
 5. An example of Buttons shortcode
 6. An example of Infoboxes shortcode
 7. An example of Pricing Tables shortcode
+
+== Changelog ==
+
+= 1.1.0 - 2014-02-27 =
+* Box shortocode added
+* Counter shortocode added
+* Divider shortocode added
+* Border shortocode removed, use Box instead
+* Few minor fixes
+
+= 1.0.0
+* Initial release
+
+== Upgrade Notice ==
+
+= 1.1.0 =
+Border shortocode removed, use Box instead

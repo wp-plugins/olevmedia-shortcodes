@@ -5,23 +5,40 @@ $omsc_shortcodes_generators=array();
 $omsc_shortcodes_generators['columns'] = <<<EOF
 	var size=$('#omsc_column_size').val();
 	var last=$('#omsc_column_last').attr('checked');
-	if(last) {
-		code.before='['+size+'_last]';
-		code.after='[/'+size+'_last]';
+	if(size.substr(0,6) == 'combo_') {
+		if(size == 'combo_one_half') {
+			code.before='[one_half]';
+			code.after='<br />Column 1 content here<br />[/one_half][one_half_last]<br />Column 2 content here<br />[/one_half_last]';
+		}
+		else if(size == 'combo_one_third') {
+			code.before='[one_third]';
+			code.after='<br />Column 1 content here<br />[/one_third][one_third]<br />Column 2 content here<br />[/one_third][one_third_last]<br />Column 3 content here<br />[/one_third_last]';
+		}
+		else if(size == 'combo_one_fourth') {
+			code.before='[one_fourth]';
+			code.after='<br />Column 1 content here<br />[/one_fourth][one_fourth]<br />Column 2 content here<br />[/one_fourth][one_fourth]<br />Column 3 content here<br />[/one_fourth][one_fourth_last]<br />Column 4 content here<br />[/one_fourth_last]';
+		}
 	} else {
-		code.before='['+size+']';
-		code.after='[/'+size+']';
+		if(last) {
+			code.before='['+size+'_last]';
+			code.after='[/'+size+'_last]';
+		} else {
+			code.before='['+size+']';
+			code.after='[/'+size+']';
+		}
 	}
 EOF;
 
 $omsc_shortcodes_generators['buttons'] = <<<EOF
 	var href=$('#omsc_button_href').val();
 	var title=$('#omsc_button_title').val();
+	var style=$('#omsc_button_style').val();
 	var color=$('#omsc_button_customcolor').val();
 	if($('#omsc_button_color').val() == 'theme')
 		color='';
 	var hovercolor=$('#omsc_button_hovercolor').val();
 	var textcolor=$('#omsc_button_textcolor').val();
+	var texthovercolor=$('#omsc_button_texthovercolor').val();
 	var target=$('#omsc_button_target').val();
 	var size=$('#omsc_button_size').val();
 	var text=$('#omsc_button_text').val();
@@ -35,10 +52,47 @@ $omsc_shortcodes_generators['buttons'] = <<<EOF
 
 	if(size == 'xlarge') {
 		title=omsc_shortcodes_attr_esc(title);
-		code.before='[button href="'+href+'" size="'+size+'" title="'+title+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+text+'[/button]';
+		code.before='[button href="'+href+'" style="'+style+'" size="'+size+'" title="'+title+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(texthovercolor!=''?' texthovercolor="'+texthovercolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+text+'[/button]';
 	}
 	else
-		code.before='[button href="'+href+'" size="'+size+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+title+'[/button]';
+		code.before='[button href="'+href+'" style="'+style+'" size="'+size+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(texthovercolor!=''?' texthovercolor="'+texthovercolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+title+'[/button]';
+EOF;
+
+$omsc_shortcodes_generators['animation'] = <<<EOF
+	var effect=$('#omsc_animation_effect').val();
+	var content=$('#omsc_animation_content').val();
+	var delay=$('#omsc_animation_delay').val();
+
+	var count=parseInt(delay);
+	if(isNaN(delay))
+		delay=0;
+	
+	code.before='[animation effect="'+effect+'"'+(delay?' delay="'+delay+'"':'')+']'+content;
+	code.after='[/animation]';
+EOF;
+
+$omsc_shortcodes_generators['divider'] = <<<EOF
+	var style=$('#omsc_divider_style').val();
+	var color=$('#omsc_divider_customcolor').val();
+	var bwidth=$('#omsc_divider_bwidth').val();
+	var icon=$('#omsc_divider_icon').val();
+	var width=$('#omsc_divider_width').val();
+	var full_width=$('#omsc_divider_full_width').attr('checked');
+		
+	if($('#omsc_divider_color').val() == 'default')
+		color='';
+	else if($('#omsc_divider_color').val() == 'theme')
+		color='theme';
+	
+	code.before='[divider'
+		+(style?' style="'+style+'"':'')
+		+(bwidth?' border="'+bwidth+'"':'')
+		+(color?' color="'+color+'"':'')
+		+(icon?' icon="'+icon+'"':'')
+		+(width?' width="'+width+'"':'')
+		+(full_width?' full_width="true"':'')
+	+']';
+	
 EOF;
 
 $omsc_shortcodes_generators['dropcaps'] = <<<EOF
@@ -120,21 +174,59 @@ $omsc_shortcodes_generators['infobox'] = <<<EOF
 	code.before='[infobox'+(color?' color="'+color+'"':'')+(textcolor?' textcolor="'+textcolor+'"':'')+(icon?' icon="'+icon+'"':'')+']'+content+'[/infobox]';
 EOF;
 
-$omsc_shortcodes_generators['border'] = <<<EOF
-	var content=$('#omsc_border_content').val();
-	var width=$('#omsc_border_width').val();
-	var color=$('#omsc_border_customcolor').val();
-	if(	$('#omsc_border_color').val() == 'theme' ) {
-		color='';
+$omsc_shortcodes_generators['box'] = <<<EOF
+	var title=$('#omsc_box_title').val();
+	var content=$('#omsc_box_content').val();
+	var border_width=$('#omsc_box_border_width').val();
+	var border_style=$('#omsc_box_border_style').val();
+	var border_color=$('#omsc_box_border_customcolor').val();
+	var bg_color=$('#omsc_box_bg_customcolor').val();
+	var bg_image=$('#omsc_box_bg_image').val();
+	var bg_image_pos=$('#omsc_box_bg_image_pos').val();
+	var icon=$('#omsc_box_icon').val();
+	var icon_style=$('#omsc_box_icon_style').val();
+	var icon_shape=$('#omsc_box_icon_shape').val();
+	var align=$('#omsc_box_align').val();
+	var text_color=$('#omsc_box_text_color').val();
+	var height=$('#omsc_box_height').val();
+	
+	
+	if(	$('#omsc_box_border_color').val() == 'theme' ) {
+		border_color='';
+	}
+	if(	$('#omsc_box_bg_color').val() == 'theme' ) {
+		bg_color='theme';
+	} else if(	$('#omsc_box_bg_color').val() == 'none' ) {
+		bg_color='';
 	}
 	
-	width=parseInt(width);
-	if(isNaN(width))
-		width=1;
-	if(width < 1)
-		width=1;
+	border_width=parseInt(border_width);
+	if(isNaN(border_width))
+		border_width=0;
+	if(border_width < 0)
+		border_width=0;
+		
+	height=parseInt(height);
+	if(isNaN(height))
+		height=0;
+	if(height < 0)
+		height=0;
 	
-	code.before='[border width="'+width+'"'+(color?' color="'+color+'"':'')+']'+content+'[/border]';
+	code.before='[box '+
+		'title="'+title+'"'+
+		(border_width?' border_width="'+border_width+'"':'')+
+		(border_width && border_color?' border_color="'+border_color+'"':'')+
+		(border_width && border_style?' border_style="'+border_style+'"':'')+
+		(bg_color?' bg_color="'+bg_color+'"':'')+
+		(bg_image?' bg_image="'+bg_image+'"':'')+
+		(bg_image && bg_image_pos?' bg_image_pos="'+bg_image_pos+'"':'')+
+		(icon?' icon="'+icon+'"':'')+
+		(icon && icon_style?' icon_style="'+icon_style+'"':'')+
+		(icon && icon_shape?' icon_shape="'+icon_shape+'"':'')+
+		(align?' align="'+align+'"':'')+
+		(text_color?' text_color="'+text_color+'"':'')+
+		(height?' height="'+height+'"':'')+
+	']'+content+'[/box]';
 EOF;
 
 $omsc_shortcodes_generators['biginfobox'] = <<<EOF
@@ -163,9 +255,22 @@ $omsc_shortcodes_generators['icons'] = <<<EOF
 	if(color == 'custom')
 		color=$('#omsc_icon_customcolor').val();
 	var color_color=$('#omsc_icon_color_color').val();
+	
+	var bordercolor=$('#omsc_icon_bordercustomcolor').val();
+	if($('#omsc_icon_bordercolor').val() == 'theme')
+		bordercolor='theme';
+	else if($('#omsc_icon_bordercolor').val() == 'none') 
+		bordercolor='';
+
+	var bgcolor=$('#omsc_icon_bgcustomcolor').val();
+	if($('#omsc_icon_bgcolor').val() == 'theme')
+		bgcolor='theme';
+	else if($('#omsc_icon_bgcolor').val() == 'none') 
+		bgcolor='';	
+	
 	var size=$('#omsc_icon_size').val();
 
-	code.before='[icon'+(icon!=''?' icon="'+icon+'"':'')+(size!=''?' size="'+size+'"':'')+(color?' color="'+color+'"':'')+']';
+	code.before='[icon'+(icon!=''?' icon="'+icon+'"':'')+(size!=''?' size="'+size+'"':'')+(color?' color="'+color+'"':'')+(bordercolor?' bordercolor="'+bordercolor+'"':'')+(bgcolor?' bgcolor="'+bgcolor+'"':'')+']';
 EOF;
 
 $omsc_shortcodes_generators['marker'] = <<<EOF
@@ -305,6 +410,8 @@ $omsc_shortcodes_generators['visibility'] = <<<EOF
 	var desktop=$('#omsc_visibility_desktop').attr('checked');
 	var tablet=$('#omsc_visibility_tablet').attr('checked');
 	var mobile=$('#omsc_visibility_mobile').attr('checked');
+	var retina=$('#omsc_visibility_retina').attr('checked');
+	var non_retina=$('#omsc_visibility_non_retina').attr('checked');
 	//var mobile_landscape=$('#omsc_visibility_mobile_landscape').attr('checked');
 	//var mobile_portrait=$('#omsc_visibility_mobile_portrait').attr('checked');
 	var show=[];
@@ -314,13 +421,17 @@ $omsc_shortcodes_generators['visibility'] = <<<EOF
 		show.push('tablet');
 	if(mobile)
 		show.push('mobile');
+	if(retina)
+		show.push('retina');
+	if(non_retina)
+		show.push('non-retina');
 	//if(mobile_landscape)
 	//	show.push('mobile-landscape');
 	//if(mobile_portrait)
 	//	show.push('mobile-portrait');
 	
 	if(show.length)
-		code.before='[visibility show="'+show.join(' ')+'"]'+vcode+'[/visibility]';
+		code.before='[visibility display="'+show.join(' ')+'"]'+vcode+'[/visibility]';
 	
 EOF;
 
@@ -360,6 +471,88 @@ $omsc_shortcodes_generators['recent_posts'] = <<<EOF
 	}					
 	
 	code.before='[recent_posts'+(ids?' ids="'+ids+'"':'')+(count?' count="'+count+'"':'')+(date?' date="true"':'')+(thumbnail?' thumbnail="true"':'')+(excerpt?' excerpt="true"':'')+(category!=0&&category!='-1'?' category="'+category+'"':'')+']';
+
+EOF;
+
+$omsc_shortcodes_generators['full_width'] = <<<EOF
+	var color=$('#omsc_fullwidth_bg_color').val();
+	var textcolor=$('#omsc_fullwidth_text_color').val();
+	var image=$('#omsc_fullwidth_bg_image').val();
+	var bgpos=$('#omsc_fullwidth_bg_image_pos').val();
+	var bgatt=$('#omsc_fullwidth_bg_image_att').val();
+	var video=$('#omsc_fullwidth_video_src').val();
+	var text=$('#omsc_fullwidth_text').val();
+	var video_mp4=$('#omsc_fullwidth_video_mp4').val();
+	var video_m4v=$('#omsc_fullwidth_video_m4v').val();
+	var video_webm=$('#omsc_fullwidth_video_webm').val();
+	var video_ogv=$('#omsc_fullwidth_video_ogv').val();
+	var video_wmv=$('#omsc_fullwidth_video_wmv').val();
+	var video_flv=$('#omsc_fullwidth_video_flv').val();
+	var no_paddings=$('#omsc_fullwidth_no_paddings').attr('checked');
+	
+	code.before='[full_width_section'
+		+(color?' color="'+color+'"':'')
+		+(textcolor?' textcolor="'+textcolor+'"':'')
+		+(no_paddings?' no_paddings="true"':'')
+		+(image?' image="'+image+'"':'')
+		+(image&&bgpos?' bgpos="'+bgpos+'"':'')
+		+(image&&bgatt?' bgatt="'+bgatt+'"':'')
+		+(video?' video="'+video+'"':'')
+		+(video_mp4?' video_mp4="'+video_mp4+'"':'')
+		+(video_m4v?' video_m4v="'+video_m4v+'"':'')
+		+(video_webm?' video_webm="'+video_webm+'"':'')
+		+(video_ogv?' video_ogv="'+video_ogv+'"':'')
+		+(video_wmv?' video_wmv="'+video_wmv+'"':'')
+		+(video_flv?' video_flv="'+video_flv+'"':'')
+	+']'+text+'[/full_width_section]';
+
+EOF;
+
+$omsc_shortcodes_generators['portfolio'] = <<<EOF
+	var count_=$('#omsc_portfolio_count').val();
+	var layout=$('#omsc_portfolio_layout').val();
+	var size=$('#omsc_portfolio_size').val();
+	var ratio=$('#omsc_portfolio_ratio').val();
+	var category=$('#omsc_portfolio_category').val();
+	var randomize=$('#omsc_portfolio_randomize').attr('checked');
+	var ids=$('#omsc_portfolio_ids').val();
+	
+	code.before='[portfolio'
+		+(count_?' count="'+count_+'"':'')
+		+(layout?' layout="'+layout+'"':'')
+		+(size?' size="'+size+'"':'')
+		+(ratio?' ratio="'+ratio+'"':'')
+		+(category && category != '0'?' category="'+category+'"':'')
+		+(randomize?' randomize="true"':'')
+		+(ids?' ids="'+ids+'"':'')
+	+']';
+
+EOF;
+
+$omsc_shortcodes_generators['counter'] = <<<EOF
+	var number=$('#omsc_counter_number').val();
+	var prefix=$('#omsc_counter_prefix').val();
+	var suffix=$('#omsc_counter_suffix').val();
+	var title=$('#omsc_counter_title').val();
+	var color=$('#omsc_counter_color').val();
+	var size=$('#omsc_counter_size').val();
+	var animation=$('#omsc_counter_animation').val();
+
+	if(color == 'custom')
+		color=$('#omsc_counter_customcolor').val();
+	var color_color=$('#omsc_icon_color_color').val();
+
+	if(number != '') {
+		code.before='[counter'
+			+(number?' number="'+number+'"':'')
+			+(prefix?' prefix="'+prefix+'"':'')
+			+(suffix?' suffix="'+suffix+'"':'')
+			+(title?' title="'+title+'"':'')
+			+(color?' color="'+color+'"':'')
+			+(size?' size="'+size+'"':'')
+			+(animation!=''?' animation="'+animation+'"':'')
+		+']';
+	}
 
 EOF;
 

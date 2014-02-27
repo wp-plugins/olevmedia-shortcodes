@@ -15,16 +15,29 @@ var omShortcodes = {
 
 omShortcodes.modules.buttons = {
 	init: function() {
-		
 		jQuery('.omsc-button.omsc-custom-hover').each(function(){
 			jQuery(this).data('def-bg-color',jQuery(this).css('background-color'));
-			jQuery(this).data('def-border-color',jQuery(this).css('border-color'));
+			jQuery(this).data('def-text-color',jQuery(this).css('color'));
+			jQuery(this).data('def-border-color',jQuery(this).css('border-top-color'));
 		}).hover(function(){
-			jQuery(this).css('background-color',jQuery(this).data('hover-bg-color'));
-			jQuery(this).css('border-color',jQuery(this).data('hover-border-color'));
+			var color;
+
+			color=jQuery(this).data('hover-bg-color');
+			if(color)
+				jQuery(this).css('background-color',color);
+
+			color=jQuery(this).data('hover-text-color');
+			if(color)
+				jQuery(this).css('color',color);
+
+			color=jQuery(this).data('hover-border-color');
+			if(color)
+				jQuery(this).css('border-color',color);
+				
 		}, function(){
 			jQuery(this).css('background-color',jQuery(this).data('def-bg-color'));
 			jQuery(this).css('border-color',jQuery(this).data('def-border-color'));
+			jQuery(this).css('color',jQuery(this).data('def-text-color'));
 		});
 		
 	}
@@ -198,6 +211,71 @@ omShortcodes.modules.responsivebox = {
 				}
 			}
 		});
+		
+	}
+}
+
+omShortcodes.modules.counter = {
+	init: function() {
+		
+		var interval=30;
+		
+		function om_tick(args) {
+			args.obj.html([args.prefix, args.current, args.suffix].join(''));
+			if(args.current < args.count) {
+				args.current+=args.step;
+				if(args.current > args.count)
+					args.current=args.count;
+					
+				setTimeout(function(){
+					om_tick(args);
+				}, args.interval);
+			}
+		}
+		
+		function om_start_item(obj) {
+			var $this=jQuery(obj);
+			var count=$this.data('count');
+			var duration=$this.data('animation');
+			if(count && duration) {
+				if(duration > interval) {
+					
+					var step=Math.ceil( count / (duration/interval) );
+					if(step < 1)
+						step=1;
+					om_tick({
+						obj: $this.find('.omsc-counter-number'),
+						current: 0,
+						count: count,
+						step: step,
+						interval: interval,
+						prefix: $this.data('prefix'),
+						suffix: $this.data('suffix')
+					});
+
+				}
+			}
+		}
+		
+		
+		if(jQuery.waypoints) {
+			jQuery('.omsc-counter').each(function(){
+	
+				jQuery(this).waypoint(function(){
+					om_start_item(this);
+				},{
+					offset: '100%',
+					triggerOnce: true
+				});			
+				
+			});
+		} else {
+			jQuery('.omsc-counter').each(function(){
+
+				om_start_item(this);
+				
+			});
+		}
 		
 	}
 }

@@ -11,6 +11,8 @@ function omsc_sc_columns_workup_content($content) {
 
 	if(substr($content,0,6) == '<br />')
 		$content=substr($content,6);
+		
+	$content .= '<div class="clear"></div>';
 			
 	return $content;
 }
@@ -245,14 +247,21 @@ function omsc_sc_button( $atts, $content = null ) {
 		'target'     => '',
 		'color'   => '',
 		'hovercolor'   => '',
-		'textcolor'   => '#ffffff',
+		'textcolor'   => '',
+		'texthovercolor'   => '',
 		'size' => 'medium',
 		'title' => '',
 		'tooltip' => '',
 		'icon' => '',
 		'iconcolor' => '',
 		'width' => false,
+		'style' => '',
 	), $atts));
+	
+	if(!$textcolor) {
+		if($style != 'border')
+			$textcolor='#ffffff';
+	}
 	
 	if(!$href && $url)
 		$href=$url;
@@ -268,22 +277,31 @@ function omsc_sc_button( $atts, $content = null ) {
 	if(!$icon && $size == 'xlarge') {
 		$icon='omsc-button-xlarge';
 	}
+	
+	if(!$style) {
+		$style="emboss";
+	}
 		
-	$style=array();
+	$styles=array();
 	$classes=array('omsc-button');
 	
+	if($content == '') {
+		$classes[]='omsc-no-content';
+	}
+	
 	if($color) {
-		$style[]='background-color:'.$color;
-		$style[]='border-color:'.$color;
+		if($style != 'border')
+			$styles[]='background-color:'.$color;
+		$styles[]='border-color:'.$color;
 	}
 	
 	if($width) {
 		if(is_numeric($width))
 			$width.='px';
-		$style[]='width:'.$width;
+		$styles[]='width:'.$width;
 	}
 
-	if($hovercolor) {
+	if($hovercolor || $texthovercolor) {
 		$classes[]='omsc-custom-hover';
 	} else {
 		$classes[]='omsc-no-custom-hover';
@@ -301,8 +319,12 @@ function omsc_sc_button( $atts, $content = null ) {
 		$classes[]='omsc-add-tooltip';
 	}
 	
+	if($style) {
+		$classes[]='omsc-style-'.$style;
+	}
+	
 	if($textcolor) {
-		$style[]='color:'.$textcolor;
+		$styles[]='color:'.$textcolor;
 				
 		$tmp=str_replace('#','',$textcolor);
 		if(max(base_convert(substr($tmp,0,2),16,10),base_convert(substr($tmp,2,2),16,10),base_convert(substr($tmp,4,2),16,10)) > 127)
@@ -311,10 +333,22 @@ function omsc_sc_button( $atts, $content = null ) {
 			$classes[]='omsc-text-dark';
 	}
 	
-	$out='<a class="'.implode(' ',$classes).'" href="'.$href.'"'.$target.(!empty($style)?' style="'.implode(';',$style).'"':'').($tooltip?' data-tooltip="'.esc_attr($tooltip).'"':'').($hovercolor?' data-hover-bg-color="'.$hovercolor.'" data-hover-border-color="'.$hovercolor.'"':'').'>';
+	$hover_border_color=false;
+	
+	if($hovercolor)
+		$hover_border_color=$hovercolor;
+		
+	//if($style == 'border')
+	//	$hover_border_color=false;
+	
+	$out='<a class="'.implode(' ',$classes).'" href="'.$href.'"'.$target.(!empty($styles)?' style="'.implode(';',$styles).'"':'').($tooltip?' data-tooltip="'.esc_attr($tooltip).'"':'').($hovercolor?' data-hover-bg-color="'.$hovercolor.'"':'').($texthovercolor?' data-hover-text-color="'.$texthovercolor.'"':'').($hover_border_color?' data-hover-border-color="'.$hover_border_color.'"':'').'>';
 
-	if($icon)
-		$out.='<i class="icon-'.$icon.'"'.($iconcolor?' style="color:'.$iconcolor.'"':'').'></i>';
+	if($icon) {
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];
+		$out.='<i class="fa fa-'.$icon.'"'.($iconcolor?' style="color:'.$iconcolor.'"':'').'></i>';
+	}
 				
 	if($size == 'xlarge') {
 		$out.= '<span class="omsc-button-title">'.$title.'</span>';
@@ -329,6 +363,66 @@ function omsc_sc_button( $atts, $content = null ) {
 	return $out;
 }
 add_shortcode('button', 'omsc_sc_button');
+
+/*************************************************************************************
+ *	Divider
+ *************************************************************************************/
+
+function omsc_sc_divider( $atts, $content = null ) {
+
+	if(has_filter('omsc_sc_divider'))
+		return apply_filters('omsc_sc_divider', $atts, $content);		
+	
+	extract(shortcode_atts(array(
+		'style'     	 => '',
+		'color'     => '',
+		'border' => '',
+		'icon' => '',
+		'width' => '',
+		'full_width' => '',
+	), $atts));
+	
+	$styles=array();
+	$classes=array('omsc-divider');
+	
+	if($border) {
+		if(in_array($border,array('small','medium','large')))
+			$classes[]='omsc-border-'.$border;
+	}
+	
+	if($style)
+		$classes[]='omsc-style-'.$style;
+	if($color == 'theme')
+		$classes[]='omsc-theme-color';
+	elseif($color) {
+		$styles[]='color:'.$color;
+		$classes[]='omsc-custom-color';
+	}
+	
+	if($width) {
+		if(is_numeric(trim($width)))
+			$width=trim($width).'px';
+		$styles[]='width:'.$width;
+	}
+	
+	if($full_width) {
+		$classes[]='omsc-divider-full-width';
+	}
+
+	$out='';
+	
+	$out .= '<div class="'.implode(' ',$classes).'" style="'.implode(';',$styles).'">';
+	
+	if($icon && in_array($style,array('icon-left','icon-center','icon-right'))) {
+		$out .= '<div class="omsc-divider-icon"><i class="fa fa-'.$icon.'"></i></div>';
+	}
+	
+	$out .= '</div>';
+		
+	return $out;
+
+}
+add_shortcode('divider', 'omsc_sc_divider');
 
 /*************************************************************************************
  *	Dropcaps
@@ -481,6 +575,34 @@ function omsc_sc_tabs( $atts, $content = null ) {
 add_shortcode( 'tabs', 'omsc_sc_tabs' );
 
 /*************************************************************************************
+ *	Animation
+ *************************************************************************************/
+
+function omsc_sc_animation( $atts, $content = null ) {
+
+	if(has_filter('omsc_sc_animation'))
+		return apply_filters('omsc_sc_animation', $atts, $content);		
+	
+	extract(shortcode_atts(array(
+		'effect'     	 => '',
+		'delay'     	 => '',
+	), $atts));
+	
+	$classes=array('omsc-animation','omsc-animation-almost-visible');
+	$style=array();
+
+	if($effect) {
+		$classes[]='omsc-effect-'.$effect;
+	}
+	
+	$delay=intval($delay);
+		
+	return '<div class="'.implode(' ',$classes).'"'.(!empty($style)?' style="'.implode(';',$style).'"':'').($delay?' data-animation-delay="'.$delay.'"':'').'>' . do_shortcode($content) . '</div>';
+
+}
+add_shortcode('animation', 'omsc_sc_animation');
+
+/*************************************************************************************
  *	Infobox
  *************************************************************************************/
 
@@ -498,8 +620,13 @@ function omsc_sc_infobox( $atts, $content = null ) {
 	$classes=array('omsc-infobox');
 	$style=array();
 
-	if($icon)
+	if($icon) {
 		$classes[]='omsc-with-icon';
+		
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];
+	}
 	
 	if($color) {
 		$style[]='background:'.$color;
@@ -508,8 +635,8 @@ function omsc_sc_infobox( $atts, $content = null ) {
 		
 	if($textcolor)
 		$style[]='color:'.$textcolor;
-	
-	return '<div class="'.implode(' ',$classes).'"'.(!empty($style)?' style="'.implode(';',$style).'"':'').'>'.($icon?'<i class="icon-'.$icon.' omsc-infobox-icon"></i>':'') . do_shortcode($content) . '</div>';
+		
+	return '<div class="'.implode(' ',$classes).'"'.(!empty($style)?' style="'.implode(';',$style).'"':'').'>'.($icon?'<i class="fa fa-'.$icon.' omsc-infobox-icon"></i>':'') . do_shortcode($content) . '</div>';
 
 }
 add_shortcode('infobox', 'omsc_sc_infobox');
@@ -574,33 +701,113 @@ function omsc_sc_biginfobox( $atts, $content = null ) {
 add_shortcode('biginfobox', 'omsc_sc_biginfobox');
 
 /*************************************************************************************
- *	Border
+ *	Box
  *************************************************************************************/
 
-function omsc_sc_border( $atts, $content = null ) {
+function omsc_sc_box( $atts, $content = null ) {
 	
-	if(has_filter('omsc_sc_border'))
-		return apply_filters('omsc_sc_border', $atts, $content);	
+	if(has_filter('omsc_sc_box'))
+		return apply_filters('omsc_sc_box', $atts, $content);	
 	
 	extract(shortcode_atts(array(
-		'width' => '',
-		'color' => '',
+		'title' => '',
+		'border_width' => '',
+		'border_color' => '',
+		'border_style' => '',
+		'bg_color' => '',
+		'bg_image' => '',
+		'bg_image_pos' => '',
+		'icon' => '',
+		'icon_style' => '',
+		'icon_shape' => '',
+		'align' => '',
+		'text_color' => '',
+		'height' => '',
 	), $atts));
 	
-	$style=array();
+	$styles=array();
+	$classes=array('omsc-box');
 	
-	$width=intval($width);
-	if($width)
-		$style[]='border-width:'.$width.'px';
-	if($color)
-		$style[]='border-color:'.$color;
+	$border_width=intval($border_width);
+	$height=intval($height);
 	
-	$out='<div class="omsc-style-border"'.(!empty($style)?' style="'.implode(';',$style).'"':'').'>'.do_shortcode($content).'</div>';
+	
+	if($title)
+		$classes[]='omsc-with-title';
+		
+	if($border_width) {
+		$classes[]='omsc-with-border';
+		$styles[]='border-width:'.$border_width.'px';
+	}
+	if($border_color) {
+		$styles[]='border-color:'.$border_color;
+	}
+	if($bg_color) {
+		$classes[]='omsc-with-bg-color';
+		if($bg_color == 'theme')
+			$classes[]='omsc-bg-color-theme';
+		else
+			$styles[]='background-color:'.$bg_color;
+	}
+	if($bg_image) {
+		$styles[]='background-image:url('.$bg_image.')';
+	}
+	if($bg_image_pos) {
+		if($bg_image_pos == 'cover')
+			$styles[]='-webkit-background-size:cover;background-size:cover';
+		else
+			$styles[]='background-position:'.$bg_image_pos;
+	}
+	if($align) {
+		$styles[]='text-align:'.$align;
+	}
+	if($text_color) {
+		$styles[]='color:'.$text_color;
+	}
+	if($height) {
+		$styles[]='height:'.$height.'px';
+	}
+	
+	if($icon) {
+		$classes[]='omsc-with-icon';
+		
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];
+
+		if($icon_style) {
+			$classes[]='omsc-icon-style-'.$icon_style;
+		}
+		if($icon_shape) {
+			$classes[]='omsc-icon-shape-'.$icon_shape;
+		}
+	}
+	if($border_style == 'dotted') {
+		$classes[]='omsc-border-style-dotted';
+	}
+
+		
+	$out='<div class="'.implode(' ',$classes).'"'.(!empty($styles)?' style="'.implode(';',$styles).'"':'').'>';
+	if($icon) {
+		$out .= '<div class="omsc-box-icon-wrapper"><div class="omsc-box-icon" style="'.
+			($icon_style=='border'&&$border_width?'border-width:'.$border_width.'px;':'').
+			($border_width?'margin-top:-'.($border_width*1.5).'px;margin-left:-'.$border_width.'px;':'').
+			($border_width==0&&$icon_style=='bg'&&$bg_color&&$bg_color!='theme'?'background-color:'.$bg_color.';':'').
+			($border_width==0&&$icon_style=='border'&&$bg_color&&$bg_color!='theme'?'border-color:'.$bg_color.';color:'.$bg_color.';':'').
+			($icon_style=='bg'&&$border_color?'background-color:'.$border_color.';':'').
+			($icon_style=='border'&&$bg_color&&$bg_color!='theme'&&$border_width?'background-color:'.$bg_color.';':'').
+			($icon_style=='border'&&$border_color?'border-color:'.$border_color.';color:'.$border_color.';':'').
+			'"><i class="fa fa-'.$icon.'"></i></div></div>';
+	}
+	$out.='<div class="omsc-box-inner">';
+	if($title)
+		$out .= '<div class="omsc-box-title">'.$title.'</div>';
+	$out.=do_shortcode($content).'</div></div>';
 	
 	return $out;
 
 }
-add_shortcode('border', 'omsc_sc_border');
+add_shortcode('box', 'omsc_sc_box');
 
 /*************************************************************************************
  *	Icon
@@ -615,13 +822,52 @@ function omsc_sc_icon( $atts, $content = null ) {
 		'icon' => '',
 		'color' => '',
 		'size' => '',
+		'bordercolor' => '',
+		'bgcolor' => '',
 	), $atts));
 	
-	if(!in_array($size,array('large','2x','3x','4x')))
+	$classes=array('omsc-icon','fa');
+	$styles=array();
+	
+	if(!in_array($size,array('large','2x','3x','4x','5x')))
 		$size='';
 	
-	if($icon)
-		$out='<i class="icon-'.$icon.($size?' icon-'.$size:'').($color=='theme'?' omsc-icon-color-theme':'').'"'.($color&&$color!='theme'?' style="color:'.$color.'"':'').'></i>';
+	if($size == 'large')
+		$size='lg';
+	
+	if($icon) {
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];
+			
+		$classes[]='fa-'.$icon;
+		
+		if($size)
+			$classes[]='fa-'.$size;
+			
+		if($color == 'theme') 
+			$classes[]='omsc-icon-color-theme';
+			
+		if($color && $color != 'theme')
+			$styles[]='color:'.$color;
+	
+		if($bordercolor) {
+			$classes[]='omsc-with-border';
+			if($bordercolor == 'theme')
+				$classes[]='omsc-border-color-theme';
+			else
+				$styles[]='border-color:'.$bordercolor;
+		}
+		if($bgcolor) {
+			$classes[]='omsc-with-bg';
+			if($bgcolor == 'theme')
+				$classes[]='omsc-bg-color-theme';
+			else
+				$styles[]='background-color:'.$bgcolor;
+		}
+
+		$out='<i class="'.implode(' ',$classes).'" style="'.implode(';',$styles).'"></i>';
+	}
 	return $out;
 
 }
@@ -670,8 +916,13 @@ function omsc_sc_custom_list( $atts, $content = null ) {
 	), $atts));
 	
 	if($icon) {
-		$content=str_ireplace('<ul','<ul class="omsc-icons-ul icons-ul"',$content);
-		$content=str_ireplace('<li>','<li><i class="icon-li icon-'.$icon.($iconcolor=='theme'?' omsc-icons-color-theme':'').'"'.($iconcolor&&$iconcolor!='theme'?' style="color:'.$iconcolor.'"':'').'></i>',$content);
+
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];		
+		
+		$content=str_ireplace('<ul','<ul class="omsc-icons-ul fa-ul"',$content);
+		$content=str_ireplace('<li>','<li><i class="fa-li fa fa-'.$icon.($iconcolor=='theme'?' omsc-icons-color-theme':'').'"'.($iconcolor&&$iconcolor!='theme'?' style="color:'.$iconcolor.'"':'').'></i>',$content);
 	}
 
 
@@ -694,7 +945,7 @@ function omsc_sc_ul( $atts, $content = null ) {
 	$content=preg_replace('#/li\][^\[]+?\[li#i','/li][li',$content);
 	$content=preg_replace('#^[^\[]+?\[#','[',$content);
 	$content=preg_replace('#\][^\]]+?$#',']',$content);
-	$content='<ul class="omsc-icons-ul icons-ul">'.do_shortcode($content).'</ul>';
+	$content='<ul class="omsc-icons-ul fa-ul">'.do_shortcode($content).'</ul>';
 
 	return $content;
 }
@@ -710,7 +961,13 @@ function omsc_sc_li( $atts, $content = null ) {
 		'iconcolor' => '',
 	), $atts));
 	
-	return '<li>'.($icon?'<i class="icon-li icon-'.$icon.($iconcolor=='theme'?' omsc-icons-color-theme':'').'"'.($iconcolor&&$iconcolor!='theme'?' style="color:'.$iconcolor.'"':'').'></i>':'').do_shortcode($content).'</li>';
+	if($icon) {
+		$aliases=omsc_get_fonawesome_backward_aliases();
+		if(isset($aliases[$icon]))
+			$icon=$aliases[$icon];
+	}
+	
+	return '<li>'.($icon?'<i class="fa-li fa fa-'.$icon.($iconcolor=='theme'?' omsc-icons-color-theme':'').'"'.($iconcolor&&$iconcolor!='theme'?' style="color:'.$iconcolor.'"':'').'></i>':'').do_shortcode($content).'</li>';
 }
 add_shortcode('li', 'omsc_sc_li');
 
@@ -880,7 +1137,7 @@ function omsc_sc_blockquote( $atts, $content = null ) {
 		'author' => '',
 	), $atts));
 	
-	$out='<blockquote class="omsc-blockquote"><div class="omsc-blockquote-inner">'.$content.'</div>'.($author?'<div class="omsc-blockquote-footer"><cite>'.$author.'</cite></div>':'').'</blockquote>';
+	$out='<blockquote class="omsc-blockquote"><div class="omsc-blockquote-inner">'.$content.'</div>'.($author?'<div class="omsc-blockquote-footer"><cite class="omsc-blockquote-author">'.$author.'</cite></div>':'').'</blockquote>';
 		
 	return $out;
 }
@@ -897,17 +1154,31 @@ function omsc_sc_visibility( $atts, $content = null ) {
 	
 	extract(shortcode_atts(array(
 		'show' => '',
+		'display' => '',
 	), $atts));
 	
+	if(!$display && $show)
+		$display=$show;
+	
 	$out='';
-	if($show) {
-		$show=explode(' ',$show);
-		$show_=array();
-		foreach($show as $v) {
-			$show_[]='omsc-visibility-'.trim($v);
+	if($display) {
+		$display=explode(' ',$display);
+		$display_=array();
+		$display_retina_=array();
+		foreach($display as $v) {
+			if(strcasecmp($v,'retina') == 0 || strcasecmp($v,'non-retina') == 0)
+				$display_retina_[]='omsc-visibility-'.trim($v);
+			else
+				$display_[]='omsc-visibility-'.trim($v);
 		}
 		
-		$out='<div class="'.implode(' ',$show_).'">'.do_shortcode($content).'</div>';
+		$out=do_shortcode($content);
+		if(!empty($display_)) {
+			$out='<div class="'.implode(' ',$display_).'">'.$out.'</div>';
+		}
+		if(!empty($display_retina_)) {
+			$out='<div class="'.implode(' ',$display_retina_).'">'.$out.'</div>';
+		}
 	}
 	
 	return $out;
@@ -1054,9 +1325,14 @@ function omsc_sc_recent_posts( $atts, $content = null ) {
 	
 				if( $thumbnail && has_post_thumbnail() ) {
 	
-					$img = wp_get_attachment_image_src( get_post_thumbnail_id(), 'medium');
+					$img = wp_get_attachment_image_src( get_post_thumbnail_id(), apply_filters('omsc_sc_recent_posts_img_size', 'medium'));
 					if($img) {
-						$out.='<div class="omsc-recent-posts-thumb"><a href="'. get_permalink() .'"><img src="'.$img[0].'" alt="'.esc_attr($post->post_title).'" /></a></div>';
+						$img_html=apply_filters('omsc_sc_recent_posts_img', '<a href="'. get_permalink() .'"><img src="'.$img[0].'" alt="'.esc_attr($post->post_title).'" /></a>', array(
+							'img_src' => $img[0],
+							'link' => get_permalink(),
+							'alt' => $post->post_title,
+						));
+						$out.='<div class="omsc-recent-posts-thumb">'.$img_html.'</a></div>';
 					}
 				}
 				
@@ -1065,7 +1341,7 @@ function omsc_sc_recent_posts( $atts, $content = null ) {
 				}
 				
 				if($excerpt) {
-					$out.='<div class="omsc-recent-posts-excerpt">'.get_the_excerpt().'</div>';
+					$out.='<div class="omsc-recent-posts-excerpt">'.apply_filters('omsc_sc_recent_posts_excerpt',get_the_excerpt()).'</div>';
 				}
 			
 			$out .='</div>';
@@ -1115,6 +1391,9 @@ function omsc_sc_logos( $atts, $content = null ) {
 		$img->removeAttribute('class');
 		$img->removeAttribute('align');
 		$img->removeAttribute('style');
+		if($img->hasAttribute('data-original')) {
+			$img->setAttribute('class','lazyload');
+		}
 
 		$parent=$img->parent();
 		
@@ -1134,3 +1413,67 @@ function omsc_sc_logos( $atts, $content = null ) {
 
 }
 add_shortcode('logos', 'omsc_sc_logos');
+
+/*************************************************************************************
+ *	Full width section
+ *************************************************************************************/
+
+function omsc_sc_full_width_section( $atts, $content = null ) {
+
+	if(has_filter('omsc_sc_full_width_section'))
+		return apply_filters('omsc_sc_full_width_section', $atts, $content);		
+	
+	// this is theme related shortcode, filter should be added in the theme
+	
+	return do_shortcode($content);
+
+}
+add_shortcode('full_width_section', 'omsc_sc_full_width_section');
+
+/*************************************************************************************
+ *	Counter
+ *************************************************************************************/
+
+function omsc_sc_counter( $atts, $content = null ) {
+
+	if(has_filter('omsc_sc_counter'))
+		return apply_filters('omsc_sc_counter', $atts, $content);		
+	
+	extract(shortcode_atts(array(
+		'number' => '',
+		'prefix' => '',
+		'suffix' => '',
+		'title' => '',
+		'color' => '',
+		'size' => '',
+		'animation' => 0,
+	), $atts));
+	
+	$animation=intval($animation);
+	
+	$out='';
+
+	$classes=array('omsc-counter');
+	
+	$classes_number=array('omsc-counter-number');
+	$styles_number=array();
+	
+	if($size)
+		$classes[]='size-'.$size;
+		
+	if($color == 'theme') 
+		$classes_number[]='omsc-theme-color';
+	elseif($color)
+		$styles_number[]='color:'.$color;
+				
+	$out.=
+		'<div class="'.implode(' ',$classes).'"'.($number?' data-count="'.intval($number).'"':'').($prefix?' data-prefix="'.$prefix.'"':'').($suffix?' data-suffix="'.$suffix.'"':'').($animation?' data-animation="'.$animation.'"':'').'>'.
+			'<div class="'.implode(' ',$classes_number).'"'.($styles_number ? ' style="'.implode(';',$styles_number).'"' : '').'>'.$prefix.$number.$suffix.'</div>'.
+			($title ? '<div class="omsc-counter-title">'.$title.'</div>' : '').
+		'</div>'
+	;
+	
+	return $out;
+
+}
+add_shortcode('counter', 'omsc_sc_counter');

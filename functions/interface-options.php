@@ -20,6 +20,9 @@ $omsc_shortcodes_options=array(
 					'four_fifth'=>__('Four Fifth','om_shortcodes'),
 					'one_sixth'=>__('One Sixth','om_shortcodes'),
 					'five_sixth'=>__('Five Sixth','om_shortcodes'),
+					'combo_one_half'=>__('Insert Combo: 1/2 + 1/2','om_shortcodes'),
+					'combo_one_third'=>__('Insert Combo: 1/3 + 1/3 + 1/3','om_shortcodes'),
+					'combo_one_fourth'=>__('Insert Combo: 1/4 + 1/4 + 1/4 + 1/4','om_shortcodes'),
 				)
 			),
 			'omsc_column_last' => array(
@@ -48,6 +51,16 @@ $omsc_shortcodes_options=array(
 				'type' => 'link_target',
 				'std' => '',
 			),
+			'omsc_button_style' => array(
+				'title' => __('Button Style','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'emboss'=>__('Emboss','om_shortcodes'), //default
+					'flat'=>__('Flat','om_shortcodes'),
+					'border'=>__('Border only','om_shortcodes'),
+				)
+			),
 			'omsc_button_color' => array(
 				'title' => __('Button Color','om_shortcodes'),
 				'type' => 'select',
@@ -70,7 +83,12 @@ $omsc_shortcodes_options=array(
 			'omsc_button_textcolor' => array(
 				'title' => __('Text Color','om_shortcodes'),
 				'type' => 'color',
-				'std' => '#ffffff',
+				'std' => '',
+			),
+			'omsc_button_texthovercolor' => array(
+				'title' => __('Text Hover Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
 			),
 			'omsc_button_size' => array(
 				'title' => __('Button Size','om_shortcodes'),
@@ -124,6 +142,70 @@ $omsc_shortcodes_options=array(
 		)
 	),
 	
+	'divider'=>array(
+		'options'=>array(
+			'omsc_divider_style' => array(
+				'title' => __('Style','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'single'=>__('Singe Line','om_shortcodes'),
+					'double'=>__('Double Line','om_shortcodes'),
+					'double-a1'=>__('Double Line Alt-1','om_shortcodes'),
+					'double-a2'=>__('Double Line Alt-2','om_shortcodes'),
+					'triple'=>__('Triple Line','om_shortcodes'),
+					'dotted'=>__('Dotted Line','om_shortcodes'),
+					'dashed'=>__('Dashed Line','om_shortcodes'),
+					'icon-left'=>__('Line With Left Aligned Icon','om_shortcodes'),
+					'icon-center'=>__('Line With Centered Icon','om_shortcodes'),
+					'icon-right'=>__('Line With Right Aligned Icon','om_shortcodes'),
+				)
+			),
+			'omsc_divider_bwidth' => array(
+				'title' => __('Line Width','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'small'=>__('Small','om_shortcodes'),
+					'medium'=>__('Medium','om_shortcodes'),
+					'large'=>__('Large','om_shortcodes'),
+				)
+			),
+			'omsc_divider_color' => array(
+				'title' => __('Color','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'default'=>__('Default','om_shortcodes'),
+					'theme'=>__('Theme Color','om_shortcodes'),
+					'custom'=>__('Custom Color','om_shortcodes'),
+				)
+			),
+			'omsc_divider_customcolor' => array(
+				'title' => __('Custom Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			'omsc_divider_icon' => array(
+				'title' => __('Icon for Style with Icon','om_shortcodes'),
+				'type' => 'fontawesomeicon',
+				'std' => '',
+			),
+			'omsc_divider_width' => array(
+				'title' => __('Width of the divider','om_shortcodes'),
+				'desc' => __('By default it\'s 100%','om_shortcodes'),
+				'type' => 'text',
+				'std' => ''
+			),
+			'omsc_divider_full_width' => array(
+				'title' => __('Full Width','om_shortcodes'),
+				'desc' => __('Left and right margins are removed if checked','om_shortcodes'),
+				'type' => 'checkbox',
+				'std' => ''
+			),
+		)
+	),
+	
 	'dropcaps'=>array(
 		'options'=>array(
 			'omsc_dropcap_title' => array(
@@ -163,10 +245,147 @@ $omsc_shortcodes_options=array(
 			),
 			'omsc_dropcap_textcolor' => array(
 				'title' => __('Text color','om_shortcodes'),
+				'desc' => __('Leave it blank for default color','om_shortcodes'),
 				'type' => 'color',
 				'std' => '',
 			),
 		)
+	),
+	
+	'full_width'=>array(
+		'options'=>array(
+
+			'omsc_fullwidth_info' => array(
+				'desc' => __('<b><u>Notice:</u></b> use this shortocde only on pages with "100% Width" template chosen to make it work properly.','om_shortcodes'),
+				'type' => 'info',
+			),		
+		
+			'omsc_fullwidth_bg_color' => array(
+				'title' => __('Background color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			'omsc_fullwidth_bg_image' => array(
+				'title' => __('Background image','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'image',
+			),
+			
+			'omsc_fullwidth_bg_image_pos' => array (
+				'title' => __('Background image position','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+        'options'=>array(
+        	'repeat' => 'Repeat image',
+        	'repeat_x_top' => 'Repeat-x image top',
+        	'repeat_x_center' => 'Repeat-x image center',
+        	'repeat_x_bottom' => 'Repeat-x image bottom',
+        	'repeat_y_left' => 'Repeat-y image left',
+        	'repeat_y_center' => 'Repeat-y image center',
+        	'repeat_y_right' => 'Repeat-y image right',
+        	'cover' => 'Cover',
+        	'no_repeat_center' => 'No-Repeat Center',
+        	'no_repeat_left_top' => 'No-Repeat Left Top',
+        	'no_repeat_top' => 'No-Repeat Top',
+        	'no_repeat_right_top' => 'No-Repeat Right Top',
+        	'no_repeat_right' => 'No-Repeat Right',
+        	'no_repeat_right_bottom' => 'No-Repeat Right Bottom',
+        	'no_repeat_bottom' => 'No-Repeat Bottom',
+        	'no_repeat_left_bottom' => 'No-Repeat Left Bottom',
+        	'no_repeat_left' => 'No-Repeat Left',
+        ),
+        
+			),
+			
+			'omsc_fullwidth_bg_image_att' => array (
+				'title' => __('Background image attachment','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'scroll',
+        'options'=>array(
+        	'scroll' => __('Scroll','om_theme'),
+        	'fixed' => __('Fixed','om_theme'),
+        ),
+        
+			),
+			
+			'omsc_fullwidth_video_src' => array(
+				'title' => __('Background video File','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+			
+			'omsc_fullwidth_text_color' => array(
+				'title' => __('Text color inside','om_shortcodes'),
+				'desc' => __('Leave it blank for default color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			
+			'omsc_fullwidth_no_paddings' => array(
+				'title' => __('Remove paddings inside the section','om_shortcodes'),
+				'desc' => __('Use this option to insert some block on full width','om_shortcodes'),
+				'type' => 'checkbox',
+				'std' => '',
+			),
+			
+			'omsc_fullwidth_text' => array(
+				'title' => __('Content','om_shortcodes'),
+				'desc' => __('You can edit it later using visual editor and shortcodes','om_shortcodes'),
+				'type' => 'textarea',
+				'std' => '',
+				'rows' => 5,
+			),
+
+			'omsc_fullwidth_video_info' => array(
+				'desc' => __('Fields below are not necessary if the "Background video File" is specified, but can be used as a fallback video sources if the browser does not support format of the video chosen above.','om_shortcodes'),
+				'type' => 'info',
+			),
+			
+			'omsc_fullwidth_video_mp4' => array(
+				'title' => __('MP4 Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+			'omsc_fullwidth_video_m4v' => array(
+				'title' => __('M4V Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+			'omsc_fullwidth_video_webm' => array(
+				'title' => __('WebM Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+			'omsc_fullwidth_video_ogv' => array(
+				'title' => __('OGV Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+			'omsc_fullwidth_video_wmv' => array(
+				'title' => __('WMV Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+			'omsc_fullwidth_video_flv' => array(
+				'title' => __('FLV Video File URL','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'video',
+			),
+
+		),
 	),
 
 	'toggle'=>array(
@@ -282,15 +501,40 @@ $omsc_shortcodes_options=array(
 		)
 	),
 	
-	'border'=>array(
+	'box'=>array(
 		'options'=>array(
-			'omsc_border_width' => array(
-				'title' => __('Border width','om_shortcodes'),
+		
+			'omsc_box_title' => array(
+				'title' => __('Title','om_shortcodes'),
+				'desc' => '',
+				'type' => 'text',
+				'std' => ''
+			),	
+
+			'omsc_box_content' => array(
+				'title' => __('Content','om_shortcodes'),
+				'desc' => __('you can modify it later in the editor','om_shortcodes'),
+				'type' => 'textarea',
+				'rows' => '4',
+				'std' => __('Here is the content','om_shortcodes')
+			),		
+		
+			'omsc_box_border_width' => array(
+				'title' => __('Border Width','om_shortcodes'),
 				'desc' => __('in pixels','om_shortcodes'),
 				'type' => 'text',
-				'std' => '1',
+				'std' => '0',
 			),
-			'omsc_border_color' => array(
+			'omsc_box_border_style' => array(
+				'title' => __('Border Style','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'solid'=>__('Solid','om_shortcodes'),
+					'dotted'=>__('Dotted','om_shortcodes'),
+				)
+			),
+			'omsc_box_border_color' => array(
 				'title' => __('Border Color','om_shortcodes'),
 				'type' => 'select',
 				'std' => '',
@@ -299,17 +543,111 @@ $omsc_shortcodes_options=array(
 					'custom'=>__('Custom','om_shortcodes'),
 				)
 			),
-			'omsc_border_customcolor' => array(
+			'omsc_box_border_customcolor' => array(
 				'title' => __('Border Custom Color','om_shortcodes'),
 				'type' => 'color',
 				'std' => '',
 			),
-			'omsc_border_content' => array(
-				'title' => __('Content','om_shortcodes'),
-				'desc' => __('you can modify it later in the editor','om_shortcodes'),
-				'type' => 'textarea',
-				'std' => ''
+			
+			'omsc_box_bg_color' => array(
+				'title' => __('Background Color','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'none',
+				'options' => array(
+					'none'=>__('None','om_shortcodes'),
+					'theme'=>__('Theme Color','om_shortcodes'),
+					'custom'=>__('Custom','om_shortcodes'),
+				)
 			),
+			'omsc_box_bg_customcolor' => array(
+				'title' => __('Background Custom Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			
+			'omsc_box_bg_image' => array(
+				'title' => __('Background Image','om_shortcodes'),
+				'type' => 'text_browse',
+				'std' => '',
+				'library' => 'image',
+			),
+			
+			'omsc_box_bg_image_pos' => array (
+				'title' => __('Background Image Position','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+        'options'=>array(
+        	'repeat' => 'Repeat image',
+        	'repeat_x_top' => 'Repeat-x image top',
+        	'repeat_x_center' => 'Repeat-x image center',
+        	'repeat_x_bottom' => 'Repeat-x image bottom',
+        	'repeat_y_left' => 'Repeat-y image left',
+        	'repeat_y_center' => 'Repeat-y image center',
+        	'repeat_y_right' => 'Repeat-y image right',
+        	'cover' => 'Cover',
+        	'no_repeat_center' => 'No-Repeat Center',
+        	'no_repeat_left_top' => 'No-Repeat Left Top',
+        	'no_repeat_top' => 'No-Repeat Top',
+        	'no_repeat_right_top' => 'No-Repeat Right Top',
+        	'no_repeat_right' => 'No-Repeat Right',
+        	'no_repeat_right_bottom' => 'No-Repeat Right Bottom',
+        	'no_repeat_bottom' => 'No-Repeat Bottom',
+        	'no_repeat_left_bottom' => 'No-Repeat Left Bottom',
+        	'no_repeat_left' => 'No-Repeat Left',
+        ),
+      ),			
+			
+			'omsc_box_icon' => array(
+				'title' => __('Box Icon','om_shortcodes'),
+				'type' => 'fontawesomeicon',
+				'std' => '',
+			),
+			
+			'omsc_box_icon_style' => array(
+				'title' => __('Icon Style','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+        'options'=>array(
+        	'border' => __('Border', 'om_shortcodes'),
+        	'bg' => __('Background', 'om_shortcodes'),
+        ),			
+			),
+			
+			'omsc_box_icon_shape' => array(
+				'title' => __('Icon Shape','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+        'options'=>array(
+        	'circle' => __('Circle', 'om_shortcodes'),
+        	'box' => __('Box', 'om_shortcodes'),
+        ),			
+			),
+			
+			'omsc_box_align' => array(
+				'title' => __('Content Align in the Box','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'center',
+        'options'=>array(
+        	'center' => __('Center', 'om_shortcodes'),
+        	'left' => __('Left', 'om_shortcodes'),
+        	'right' => __('Right', 'om_shortcodes'),
+        ),			
+			),
+			
+			'omsc_box_text_color' => array(
+				'title' => __('Text Custom Color','om_shortcodes'),
+				'desc' => __('Leave it blank for default color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+
+			'omsc_box_height' => array(
+				'title' => __('Certain Box Height','om_shortcodes'),
+				'desc' => __('specify box height in pixels if you need certain height, otherwise the height will be set automatically','om_shortcodes'),
+				'type' => 'text',
+				'std' => '',
+			),			
+			
 		)
 	),
 	
@@ -382,7 +720,7 @@ $omsc_shortcodes_options=array(
 			),
 			
 			'omsc_icon_size' => array(
-				'title' => __('Icon size','om_shortcodes'),
+				'title' => __('Icon Size','om_shortcodes'),
 				'type' => 'select',
 				'std' => '',
 				'options' => array(
@@ -391,11 +729,12 @@ $omsc_shortcodes_options=array(
 					'2x'=>__('2x','om_shortcodes'),
 					'3x'=>__('3x','om_shortcodes'),
 					'4x'=>__('4x','om_shortcodes'),
+					'5x'=>__('5x','om_shortcodes'),
 				)
 			),
 			
 			'omsc_icon_color' => array(
-				'title' => __('Icon color','om_shortcodes'),
+				'title' => __('Icon Color','om_shortcodes'),
 				'type' => 'select',
 				'std' => '',
 				'options' => array(
@@ -407,6 +746,40 @@ $omsc_shortcodes_options=array(
 
 			'omsc_icon_customcolor' => array(
 				'title' => __('Icon Custom Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			
+			'omsc_icon_bordercolor' => array(
+				'title' => __('Icon Border Color','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'none',
+				'options' => array(
+					'none'=>__('None','om_shortcodes'),
+					'theme'=>__('Theme Color','om_shortcodes'),
+					'custom'=>__('Custom','om_shortcodes'),
+				)
+			),
+
+			'omsc_icon_bordercustomcolor' => array(
+				'title' => __('Icon Border Custom Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			
+			'omsc_icon_bgcolor' => array(
+				'title' => __('Icon Background Color','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'none',
+				'options' => array(
+					'none'=>__('None','om_shortcodes'),
+					'theme'=>__('Theme Color','om_shortcodes'),
+					'custom'=>__('Custom','om_shortcodes'),
+				)
+			),
+
+			'omsc_icon_bgcustomcolor' => array(
+				'title' => __('Icon Background Custom Color','om_shortcodes'),
 				'type' => 'color',
 				'std' => '',
 			),
@@ -429,6 +802,7 @@ $omsc_shortcodes_options=array(
 			),
 			'omsc_marker_textcolor' => array(
 				'title' => __('Text color','om_shortcodes'),
+				'desc' => __('Leave it blank for default color','om_shortcodes'),
 				'type' => 'color',
 				'std' => '',
 			),
@@ -672,7 +1046,7 @@ $omsc_shortcodes_options=array(
 		'options'=>array(
 			'omsc_visibility' => array(
 				'title' => '',
-				'desc' => __('Use this shortcode to show the content only for desktop / tablet / mobile devices','om_shortcodes'),
+				'desc' => __('Use this shortcode to display the content with condition by screen size or DPI','om_shortcodes'),
 				'type' => 'info',
 				'std' => ''
 			),
@@ -682,18 +1056,40 @@ $omsc_shortcodes_options=array(
 				'type' => 'textarea',
 				'std' => '',
 			),
+			'omsc_visibility_size' => array(
+				'title' => '',
+				'desc' => __('Condition by screen size:','om_shortcodes'),
+				'type' => 'info',
+				'std' => ''
+			),
 			'omsc_visibility_desktop' => array(
-				'title' => __('Show on desktop','om_shortcodes'),
+				'title' => __('Display on desktop','om_shortcodes'),
 				'type' => 'checkbox',
 				'std' => '',
 			),
 			'omsc_visibility_tablet' => array(
-				'title' => __('Show on tablet','om_shortcodes'),
+				'title' => __('Display on tablet','om_shortcodes'),
 				'type' => 'checkbox',
 				'std' => '',
 			),
 			'omsc_visibility_mobile' => array(
-				'title' => __('Show on mobile','om_shortcodes'),
+				'title' => __('Display on mobile','om_shortcodes'),
+				'type' => 'checkbox',
+				'std' => '',
+			),
+			'omsc_visibility_dpie' => array(
+				'title' => '',
+				'desc' => __('Condition by screen DPI:','om_shortcodes'),
+				'type' => 'info',
+				'std' => ''
+			),
+			'omsc_visibility_retina' => array(
+				'title' => __('Display on retina screens','om_shortcodes'),
+				'type' => 'checkbox',
+				'std' => '',
+			),
+			'omsc_visibility_non_retina' => array(
+				'title' => __('Display on non-retina screens','om_shortcodes'),
 				'type' => 'checkbox',
 				'std' => '',
 			),
@@ -818,8 +1214,47 @@ $omsc_shortcodes_options=array(
 			),
 		)
 	),
+	
+	'animation'=>array(
+		'options'=>array(
+			'omsc_animation_effect' => array(
+				'title' => __('Animation Effect','om_shortcodes'),
+				'desc' => __('Choose the animation effect which will be applied to the content inside when it become visible','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					'fade-ltr'=>__('Fade In From Left to Right','om_shortcodes'),
+					'fade-rtl'=>__('Fade In From Right to Left','om_shortcodes'),
+					'fade-ttb'=>__('Fade In From Top to Bottom','om_shortcodes'),
+					'fade-btt'=>__('Fade In From Bottom to Top','om_shortcodes'),
+					'zoom-in'=>__('Zoom In','om_shortcodes'),
+					'zoom-out'=>__('Zoom Out','om_shortcodes'),
+					'pop-out'=>__('Pop Out','om_shortcodes'),
+					'spin'=>__('Spin','om_shortcodes'),
+					'spin-lt'=>__('Spin around Left Top','om_shortcodes'),
+					'spin-rt'=>__('Spin around Right Top','om_shortcodes'),
+					'flip'=>__('Flip','om_shortcodes'),
+					'flip-x'=>__('Flip X','om_shortcodes'),
+					'flip-y'=>__('Flip Y','om_shortcodes'),
+				)
+			),
+			'omsc_animation_content' => array(
+				'title' => __('Content to animate','om_shortcodes'),
+				'desc' => __('You can edit it later using visual editor and shortcodes','om_shortcodes'),
+				'type' => 'textarea',
+				'rows' => 4,
+				'std' => '',
+			),
+			'omsc_animation_delay' => array(
+				'title' => __('Delay before animation starts','om_shortcodes'),
+				'desc' => __('Value in milliseconds','om_shortcodes'),
+				'type' => 'text',
+				'std' => '',
+			),
+		)
+	),
 
-/*	
+
 	'portfolio'=>array(
 		'options'=>array(
 			'omsc_portfolio_count' => array(
@@ -828,14 +1263,30 @@ $omsc_shortcodes_options=array(
 				'type' => 'text',
 				'std' => '3'
 			),
-			'omsc_portfolio_description' => array(
-				'title' => __('Show short description','om_shortcodes'),
+			'omsc_portfolio_layout' => array(
+				'title' => __('Preview layout','om_shortcodes'),
 				'desc'=> '',
-				'type' => 'checkbox',
-				'std' => ''
+				'type' => 'select',
+				'std' => 'thumbnail_title',
+        'options'=>array(
+					'thumbnail' => __('Thumbnail only','om_shortcodes'),
+					'thumbnail_title' => __('Thumbnail & Title','om_shortcodes'),
+					'full' => __('Thumbnail, Title & Description','om_shortcodes'),
+        ),
+			),
+			'omsc_portfolio_size' => array(
+				'title' => __('Preview Size','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'medium',
+        'options'=>array(
+					'xsmall' => __('XSmall','om_shortcodes'),
+					'small' => __('Small','om_shortcodes'),
+					'medium' => __('Medium','om_shortcodes'),
+					'large' => __('Large','om_shortcodes'),
+        ),
 			),
 			'omsc_portfolio_ratio' => array(
-				'title' => __('Thumbnails width/height ratio','om_shortcodes'),
+				'title' => __('Thumbnail width/height ratio','om_shortcodes'),
 				'type' => 'select',
 				'std' => '3:2',
         'options'=>array(
@@ -856,6 +1307,12 @@ $omsc_shortcodes_options=array(
 				'type' => 'portfolio_category',
 				'std' => '0'
 			),
+			'omsc_portfolio_randomize' => array(
+				'title' => __('Randomize items','om_shortcodes'),
+				'desc'=> '',
+				'type' => 'checkbox',
+				'std' => ''
+			),
 			'omsc_portfolio_ids' => array(
 				'id' => 'omsc_portfolio_ids',
 				'title' => __('Custom portfolio IDs','om_shortcodes'),
@@ -866,7 +1323,69 @@ $omsc_shortcodes_options=array(
 		)
 	),
 
-*/
+	'counter'=>array(
+		'options'=>array(
+			'omsc_counter_number' => array(
+				'title' => __('Number','om_shortcodes'),
+				'desc' => '',
+				'type' => 'text',
+				'std' => ''
+			),
+			'omsc_counter_prefix' => array(
+				'title' => __('Number prefix','om_shortcodes'),
+				'desc' => __('e.g. "$" or "up to "','om_shortcodes'),
+				'type' => 'text',
+				'std' => ''
+			),
+			'omsc_counter_suffix' => array(
+				'title' => __('Number suffix','om_shortcodes'),
+				'desc' => __('e.g. "%"','om_shortcodes'),
+				'type' => 'text',
+				'std' => ''
+			),
+			'omsc_counter_title' => array(
+				'title' => __('Title','om_shortcodes'),
+				'desc' => '',
+				'type' => 'text',
+				'std' => ''
+			),
+			'omsc_counter_size' => array(
+				'title' => __('Size','om_shortcodes'),
+				'type' => 'select',
+				'std' => 'medium',
+        'options'=>array(
+					'small' => __('Small','om_shortcodes'),
+					'medium' => __('Medium','om_shortcodes'),
+					'large' => __('Large','om_shortcodes'),
+					'xlarge' => __('XLarge','om_shortcodes'),
+        ),
+			),
+			'omsc_counter_color' => array(
+				'title' => __('Color','om_shortcodes'),
+				'type' => 'select',
+				'std' => '',
+				'options' => array(
+					''=>__('Default','om_shortcodes'),
+					'theme'=>__('Theme Color','om_shortcodes'),
+					'custom'=>__('Custom','om_shortcodes'),
+				)
+			),
+
+			'omsc_counter_customcolor' => array(
+				'title' => __('Custom Color','om_shortcodes'),
+				'type' => 'color',
+				'std' => '',
+			),
+			
+			'omsc_counter_animation' => array(
+				'title' => __('Animation duration','om_shortcodes'),
+				'desc' => __('value in milliseconds or 0 - to disable animation','om_shortcodes'),
+				'type' => 'text',
+				'std' => '2000',
+			),
+		)
+	),
+
 	
 );
 
@@ -877,24 +1396,26 @@ function omsc_shortcodes_options_modify() {
 	$omsc_shortcodes_options = apply_filters('omsc_shortcodes_options', $omsc_shortcodes_options);
 		
 	$config=$GLOBALS['omShortcodesPlugin']['config'];
-	
-	if(!$config['theme_color_supported']) {
+
+	if(!$config['theme_support']['theme_color']) {
 		
 		//buttons
 		unset($omsc_shortcodes_options['buttons']['options']['omsc_button_color']);
 		$omsc_shortcodes_options['buttons']['options']['omsc_button_customcolor']['title']=__('Button Color','om_shortcodes');
 		
 		//dropcaps
-		unset($omsc_shortcodes_options['buttons']['options']['omsc_dropcap_bgcolor']);
-		$omsc_shortcodes_options['buttons']['options']['omsc_dropcap_custombgcolor']['title']=__('Background Color','om_shortcodes');
+		unset($omsc_shortcodes_options['dropcaps']['options']['omsc_dropcap_bgcolor']);
+		$omsc_shortcodes_options['dropcaps']['options']['omsc_dropcap_custombgcolor']['title']=__('Background Color','om_shortcodes');
 		
 		//infobox
 		unset($omsc_shortcodes_options['infobox']['options']['omsc_infobox_color']);
 		$omsc_shortcodes_options['infobox']['options']['omsc_infobox_customcolor']['title']=__('Background Color','om_shortcodes');
 		
-		//border
-		unset($omsc_shortcodes_options['border']['options']['omsc_border_color']);
-		$omsc_shortcodes_options['border']['options']['omsc_border_customcolor']['title']=__('Border Color','om_shortcodes');
+		//box
+		unset($omsc_shortcodes_options['box']['options']['omsc_box_border_color']);
+		$omsc_shortcodes_options['box']['options']['omsc_box_border_customcolor']['title']=__('Border Color','om_shortcodes');
+		unset($omsc_shortcodes_options['box']['options']['omsc_box_bg_color']);
+		$omsc_shortcodes_options['box']['options']['omsc_box_bg_customcolor']['title']=__('Background Color','om_shortcodes');
 
 		//biginfobox
 		unset($omsc_shortcodes_options['biginfobox']['options']['omsc_biginfobox_color']);
@@ -902,6 +1423,10 @@ function omsc_shortcodes_options_modify() {
 
 		//incons
 		unset($omsc_shortcodes_options['icons']['options']['omsc_icon_color']['options']['theme']);
+		unset($omsc_shortcodes_options['icons']['options']['omsc_icon_bgcolor']);
+		$omsc_shortcodes_options['icons']['options']['omsc_icon_bgcustomcolor']['title']=__('Background Color','om_shortcodes');
+		unset($omsc_shortcodes_options['icons']['options']['omsc_icon_bordercolor']);
+		$omsc_shortcodes_options['icons']['options']['omsc_icon_bordercustomcolor']['title']=__('Border Color','om_shortcodes');
 		
 		//marker
 		$omsc_shortcodes_options['marker']['options']['omsc_marker_custombgcolor']['title']=__('Background Color','om_shortcodes');
@@ -912,7 +1437,15 @@ function omsc_shortcodes_options_modify() {
 		
 		//bullets per item
 		unset($omsc_shortcodes_options['bullets_individual']['options']['omsc_bullets_individual_icon_color']['options']['theme']);
+		
+		//didiver
+		unset($omsc_shortcodes_options['divider']['options']['omsc_divider_color']);
+		unset($omsc_shortcodes_options['divider']['options']['omsc_divider_full_width']);
+		$omsc_shortcodes_options['divider']['options']['omsc_divider_customcolor']['title']=__('Color','om_shortcodes');
 
+		//counter
+		unset($omsc_shortcodes_options['icons']['options']['omsc_counter_color']['options']['theme']);
+		
 	}
 }
 add_action('init', 'omsc_shortcodes_options_modify');
