@@ -2,8 +2,8 @@
 Contributors: Olevmedia
 Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, box, button, buttons, counter, columns, dropcaps, divider, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 1.1.0
+Tested up to: 3.9
+Stable tag: 1.1.1
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -77,11 +77,14 @@ Automatic updates should work like a charm.
 
 == Changelog ==
 
+= 1.1.1 - 2014-04-17 =
+* WordPress 3.9 compatibility fix
+
 = 1.1.0 - 2014-02-27 =
-* Box shortocode added
-* Counter shortocode added
-* Divider shortocode added
-* Border shortocode removed, use Box instead
+* Box shortcode added
+* Counter shortcode added
+* Divider shortcode added
+* Border shortcode removed, use Box instead
 * Few minor fixes
 
 = 1.0.0 =
@@ -90,4 +93,4 @@ Automatic updates should work like a charm.
 == Upgrade Notice ==
 
 = 1.1.0 =
-Border shortocode removed, use Box instead
+Border shortcode removed, use Box instead

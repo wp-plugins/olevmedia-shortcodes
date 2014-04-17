@@ -242,7 +242,10 @@ function omsc_add_shortcodes_button() {
 add_action('admin_init', 'omsc_add_shortcodes_button' );
 
 function omsc_tmce_plugins( $plugin_array ) {
-	$plugin_array['omsc_shortcodes_plugin'] = $GLOBALS['omShortcodesPlugin']['path_url'] . 'assets/js/plugin.js';
+	if(version_compare(get_bloginfo('version') , '3.9', '>='))
+		$plugin_array['omsc_shortcodes_plugin'] = $GLOBALS['omShortcodesPlugin']['path_url'] . 'assets/js/plugin4.js';
+	else
+		$plugin_array['omsc_shortcodes_plugin'] = $GLOBALS['omShortcodesPlugin']['path_url'] . 'assets/js/plugin.js';
 	return $plugin_array;
 }
 

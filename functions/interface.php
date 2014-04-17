@@ -12,7 +12,7 @@ function omsc_admin_enqueue_scripts($hook){
 	wp_enqueue_script('omsc-core', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/js/core.js', array('jquery'));	
 
 	wp_enqueue_style( 'media-views' );
-	wp_enqueue_style('omsc-admin-style', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/css/admin-style.css');	
+	wp_enqueue_style('omsc-admin-style', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/css/admin-style.css', array(), $GLOBALS['omShortcodesPlugin']['version']);	
 	
 	wp_enqueue_style('wp-color-picker');
 	wp_enqueue_script('wp-color-picker');
