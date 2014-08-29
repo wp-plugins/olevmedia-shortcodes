@@ -3,7 +3,7 @@ Contributors: Olevmedia
 Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, box, button, buttons, counter, columns, dropcaps, divider, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,6 +76,9 @@ Automatic updates should work like a charm.
 7. An example of Pricing Tables shortcode
 
 == Changelog ==
+
+= 1.1.3 - 2014-08-29 =
+* Compatibility with some other plugins fix
 
 = 1.1.2 - 2014-08-29 =
 * Compatibility with some other plugins fix

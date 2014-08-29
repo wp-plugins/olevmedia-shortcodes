@@ -5,8 +5,10 @@ include_once('interface-shortcodes-generator.php');
 
 function omsc_admin_enqueue_scripts($hook){
 	
+	/*
 	if( 'post.php' != $hook && 'post-new.php' != $hook && 'widgets.php' != $hook )
 		return;
+	*/
 
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('omsc-core', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/js/core.js', array('jquery'));	
