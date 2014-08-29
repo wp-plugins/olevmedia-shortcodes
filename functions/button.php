@@ -4,8 +4,10 @@
 function omsc_admin_head() {
 	global $pagenow;
 	
+	/*
 	if( 'post.php' != $pagenow && 'post-new.php' != $pagenow && 'widgets.php' != $pagenow )
 		return;
+	*/
 	
 	echo "<script type='text/javascript'>";
 	
