@@ -96,7 +96,7 @@ function omsc_init_fontawesomepreview($container) {
 		
 		var $this=jQuery(this);
 		$this.find('select').change(function(){
-			$this.find('.omsc-popup-fontawesomepreview-content .omsc-item').removeClass('active').filter('[data-icon='+jQuery(this).val()+']').addClass('active');
+			$this.find('.omsc-popup-fontawesomepreview-content .omsc-item').removeClass('active').filter('[data-icon="'+jQuery(this).val()+'"]').addClass('active');
 		}).change();
 		
 	});
