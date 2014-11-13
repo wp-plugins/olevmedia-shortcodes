@@ -1344,7 +1344,7 @@ function omsc_sc_recent_posts( $atts, $content = null ) {
 					$out.='<div class="omsc-recent-posts-excerpt">'.apply_filters('omsc_sc_recent_posts_excerpt',get_the_excerpt()).'</div>';
 				}
 			
-			$out .='</div>';
+			$out .='</div>'.(($i%3==0)?'<div class="omsc-clear"></div>':'');
 			
 			$i++;
 			
