@@ -1196,9 +1196,11 @@ function omsc_sc_pricing( $atts, $content = null ) {
 		return apply_filters('omsc_sc_pricing', $atts, $content);	
 		
 	$out='';
-	
+
 	$cells=array();
 	//$max_row=0;
+	
+	$content = preg_replace('/=&#8221;(.*?)&#8221;/', '="$1"', $content);
 	
 	if(preg_match_all('#[\s\S]*?\[pricing_column([^]]*)\]([\s\S]*?)\[/pricing_column\][\s\S]*?#',$content,$cols)) {
 		
@@ -1257,10 +1259,108 @@ function omsc_sc_pricing( $atts, $content = null ) {
 		
 	}
 	
+	return $out;
+}
+add_shortcode('pricing', 'omsc_sc_pricing');
+
+/*
+// new workup for pricing tables
+
+function omsc_sc_pricing( $atts, $content = null ) {
+
+	if(has_filter('omsc_sc_pricing'))
+		return apply_filters('omsc_sc_pricing', $atts, $content);	
+		
+	$out='';
+
+	$out .= '<div class="omsc-pricing-table-wrapper"><div class="omsc-pricing-table">';
+	$out .= do_shortcode($content);
+	$out .= '<div class="omsc-clear"></div></div></div>';
 	
 	return $out;
 }
 add_shortcode('pricing', 'omsc_sc_pricing');
+
+function omsc_sc_pricing_column( $atts, $content = null ) {
+	if(has_filter('omsc_sc_pricing_column'))
+		return apply_filters('omsc_sc_pricing_column', $atts, $content);
+
+	extract(shortcode_atts(array(
+		'featured' => false,
+	), $atts));
+		
+	$out = '';
+	
+	$out .= '<ul class="omsc-pricing-column'.($featured?' omsc-pricing-column-featured':'').'">';
+	
+	$content = preg_replace('#(\[/?)(price|line|button)([^\]]*\])#', '$1pricing_column_$2$3', $content);
+	$content = preg_replace('/=&#8221;(.*?)&#8221;/', '="$1"', $content);
+	$lis = do_shortcode($content);
+	$lis=substr($lis,strpos($lis, '<li'));
+	$lis=substr($lis,0,strrpos($lis, '</li>') + 5);
+	$lis=preg_replace('#(</li>)[\s\S]*?(<li[^>]*>)#', '$1$2', $lis);
+	$out .= $lis;
+	
+	$out .= '</ul>';
+	
+	return $out;
+}
+add_shortcode('pricing_column', 'omsc_sc_pricing_column');
+
+function omsc_sc_pricing_column_name( $atts, $content = null ) {
+	if(has_filter('omsc_sc_pricing_column_name'))
+		return apply_filters('omsc_sc_pricing_column_name', $atts, $content);
+
+	extract(shortcode_atts(array(
+		'comment' => '',
+	), $atts));
+		
+	$out = '<li class="omsc-pricing-title">'.do_shortcode($content).($comment?'<div class="omsc-pricing-title-comment">'.$comment.'</div>':'').'</li>';
+	
+	return $out;
+}
+add_shortcode('pricing_column_name', 'omsc_sc_pricing_column_name');
+
+function omsc_sc_pricing_column_price( $atts, $content = null ) {
+	if(has_filter('omsc_sc_pricing_column_price'))
+		return apply_filters('omsc_sc_pricing_column_price', $atts, $content);
+
+	extract(shortcode_atts(array(
+		'comment' => '',
+	), $atts));
+		
+	$out = '<li class="omsc-pricing-price">'.do_shortcode($content).($comment?'<div class="omsc-price-comment">'.$comment.'</div>':'').'</li>';
+	
+	return $out;
+}
+add_shortcode('pricing_column_price', 'omsc_sc_pricing_column_price');
+
+function omsc_sc_pricing_column_line( $atts, $content = null ) {
+	if(has_filter('omsc_sc_pricing_column_line'))
+		return apply_filters('omsc_sc_pricing_column_line', $atts, $content);
+
+	$out = '<li>'.do_shortcode($content).'</li>';
+	
+	return $out;
+}
+add_shortcode('pricing_column_line', 'omsc_sc_pricing_column_line');
+
+function omsc_sc_pricing_column_button( $atts, $content = null ) {
+	if(has_filter('omsc_sc_pricing_column_button'))
+		return apply_filters('omsc_sc_pricing_column_button', $atts, $content);
+
+	$attributes = '';
+	if(is_array($atts)) {
+		foreach($atts as $k => $v){
+		    $attributes .= ' '.$k.'="'.$v.'"';
+		}
+	}
+	$out = '<li class="omsc-pricing-button">'.do_shortcode('[button'.$attributes.']'.$content.'[/button]').'</li>';
+	
+	return $out;
+}
+add_shortcode('pricing_column_button', 'omsc_sc_pricing_column_button');
+*/
 
 /*************************************************************************************
  *	Recent Posts
