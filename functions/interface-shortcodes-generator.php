@@ -48,14 +48,39 @@ $omsc_shortcodes_generators['buttons'] = <<<EOF
 	var iconcolor_color=$('#omsc_button_icon_color_color').val();
 	var width=$('#omsc_button_width').val();
 	
-	tooltip=omsc_shortcodes_attr_esc(tooltip);
-
 	if(size == 'xlarge') {
-		title=omsc_shortcodes_attr_esc(title);
-		code.before='[button href="'+href+'" style="'+style+'" size="'+size+'" title="'+title+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(texthovercolor!=''?' texthovercolor="'+texthovercolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+text+'[/button]';
+		code.before=
+			'[button href="'+omsc_shortcodes_attr_esc(href)+
+			'" style="'+omsc_shortcodes_attr_esc(style)+
+			'" size="'+omsc_shortcodes_attr_esc(size)+
+			'" title="'+omsc_shortcodes_attr_esc(title)+'"'+
+			(width!=''?' width="'+omsc_shortcodes_attr_esc(width)+'"':'')+
+			(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+			(hovercolor!=''?' hovercolor="'+omsc_shortcodes_attr_esc(hovercolor)+'"':'')+
+			(textcolor!=''?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+
+			(texthovercolor!=''?' texthovercolor="'+omsc_shortcodes_attr_esc(texthovercolor)+'"':'')+
+			(target!=''?' target="'+omsc_shortcodes_attr_esc(target)+'"':'')+
+			(tooltip!=''?' tooltip="'+omsc_shortcodes_attr_esc(tooltip)+'"':'')+
+			(icon!=''?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+
+			(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+omsc_shortcodes_attr_esc(iconcolor_color)+'"':'')+']'+
+			omsc_shortcodes_content_esc(text)+
+			'[/button]';
+	}	else {
+		code.before='[button href="'+omsc_shortcodes_attr_esc(href)+
+			'" style="'+omsc_shortcodes_attr_esc(style)+
+			'" size="'+omsc_shortcodes_attr_esc(size)+
+			'"'+(width!=''?' width="'+omsc_shortcodes_attr_esc(width)+'"':'')+
+			(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+			(hovercolor!=''?' hovercolor="'+omsc_shortcodes_attr_esc(hovercolor)+'"':'')+
+			(textcolor!=''?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+
+			(texthovercolor!=''?' texthovercolor="'+omsc_shortcodes_attr_esc(texthovercolor)+'"':'')+
+			(target!=''?' target="'+omsc_shortcodes_attr_esc(target)+'"':'')+
+			(tooltip!=''?' tooltip="'+omsc_shortcodes_attr_esc(tooltip)+'"':'')+
+			(icon!=''?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+
+			(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+omsc_shortcodes_attr_esc(iconcolor_color)+'"':'')+']'+
+			omsc_shortcodes_content_esc(title)+
+			'[/button]';
 	}
-	else
-		code.before='[button href="'+href+'" style="'+style+'" size="'+size+'"'+(width!=''?' width="'+width+'"':'')+(color?' color="'+color+'"':'')+(hovercolor!=''?' hovercolor="'+hovercolor+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(texthovercolor!=''?' texthovercolor="'+texthovercolor+'"':'')+(target!=''?' target="'+target+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+(icon!=''?' icon="'+icon+'"':'')+(iconcolor=='custom'&&iconcolor_color?' iconcolor="'+iconcolor_color+'"':'')+']'+title+'[/button]';
 EOF;
 
 $omsc_shortcodes_generators['animation'] = <<<EOF
@@ -67,7 +92,7 @@ $omsc_shortcodes_generators['animation'] = <<<EOF
 	if(isNaN(delay))
 		delay=0;
 	
-	code.before='[animation effect="'+effect+'"'+(delay?' delay="'+delay+'"':'')+']'+content;
+	code.before='[animation effect="'+omsc_shortcodes_attr_esc(effect)+'"'+(delay?' delay="'+delay+'"':'')+']'+omsc_shortcodes_content_esc(content);
 	code.after='[/animation]';
 EOF;
 
@@ -85,11 +110,11 @@ $omsc_shortcodes_generators['divider'] = <<<EOF
 		color='theme';
 	
 	code.before='[divider'
-		+(style?' style="'+style+'"':'')
-		+(bwidth?' border="'+bwidth+'"':'')
-		+(color?' color="'+color+'"':'')
-		+(icon?' icon="'+icon+'"':'')
-		+(width?' width="'+width+'"':'')
+		+(style?' style="'+omsc_shortcodes_attr_esc(style)+'"':'')
+		+(bwidth?' border="'+omsc_shortcodes_attr_esc(bwidth)+'"':'')
+		+(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')
+		+(icon?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')
+		+(width?' width="'+omsc_shortcodes_attr_esc(width)+'"':'')
 		+(full_width?' full_width="true"':'')
 	+']';
 	
@@ -108,7 +133,12 @@ $omsc_shortcodes_generators['dropcaps'] = <<<EOF
 	var textcolor=$('#omsc_dropcap_textcolor').val();
 	var shape=$('#omsc_dropcap_shape').val();
 	
-	code.before='[dropcap '+(size!=''?'size="'+size+'"':'')+(bgcolor!=''?' color="'+bgcolor+'"':'')+(shape!=''?' shape="'+shape+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+']'+title+'[/dropcap]';
+	code.before='[dropcap '+(size!=''?'size="'+omsc_shortcodes_attr_esc(size)+'"':'')+
+		(bgcolor!=''?' color="'+omsc_shortcodes_attr_esc(bgcolor)+'"':'')+
+		(shape!=''?' shape="'+omsc_shortcodes_attr_esc(shape)+'"':'')+
+		(textcolor!=''?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+']'+
+		omsc_shortcodes_content_esc(title)+
+		'[/dropcap]';
 	
 EOF;
 
@@ -117,9 +147,7 @@ $omsc_shortcodes_generators['toggle'] = <<<EOF
 	var content=$('#omsc_toggle_content').val();
 	var state=$('#omsc_toggle_state').val();
 	
-	title=omsc_shortcodes_attr_esc(title);
-
-	code.before='[toggle title="'+title+'"'+(state!=''?' state="'+state+'"':'')+']'+content+'[/toggle]';
+	code.before='[toggle title="'+omsc_shortcodes_attr_esc(title)+'"'+(state!=''?' state="'+omsc_shortcodes_attr_esc(state)+'"':'')+']'+omsc_shortcodes_content_esc(content)+'[/toggle]';
 EOF;
 
 $omsc_shortcodes_generators['accordion'] = <<<EOF
@@ -171,7 +199,11 @@ $omsc_shortcodes_generators['infobox'] = <<<EOF
 	var icon=$('#omsc_infobox_icon').val();
 	var textcolor=$('#omsc_infobox_textcolor').val();
 
-	code.before='[infobox'+(color?' color="'+color+'"':'')+(textcolor?' textcolor="'+textcolor+'"':'')+(icon?' icon="'+icon+'"':'')+']'+content+'[/infobox]';
+	code.before='[infobox'+(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+		(textcolor?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+
+		(icon?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+']'+
+		omsc_shortcodes_content_esc(content)+
+		'[/infobox]';
 EOF;
 
 $omsc_shortcodes_generators['box'] = <<<EOF
@@ -213,20 +245,20 @@ $omsc_shortcodes_generators['box'] = <<<EOF
 		height=0;
 	
 	code.before='[box '+
-		'title="'+title+'"'+
+		'title="'+omsc_shortcodes_attr_esc(title)+'"'+
 		(border_width?' border_width="'+border_width+'"':'')+
-		(border_width && border_color?' border_color="'+border_color+'"':'')+
-		(border_width && border_style?' border_style="'+border_style+'"':'')+
-		(bg_color?' bg_color="'+bg_color+'"':'')+
-		(bg_image?' bg_image="'+bg_image+'"':'')+
-		(bg_image && bg_image_pos?' bg_image_pos="'+bg_image_pos+'"':'')+
-		(icon?' icon="'+icon+'"':'')+
-		(icon && icon_style?' icon_style="'+icon_style+'"':'')+
-		(icon && icon_shape?' icon_shape="'+icon_shape+'"':'')+
-		(align?' align="'+align+'"':'')+
-		(text_color?' text_color="'+text_color+'"':'')+
+		(border_width && border_color?' border_color="'+omsc_shortcodes_attr_esc(border_color)+'"':'')+
+		(border_width && border_style?' border_style="'+omsc_shortcodes_attr_esc(border_style)+'"':'')+
+		(bg_color?' bg_color="'+omsc_shortcodes_attr_esc(bg_color)+'"':'')+
+		(bg_image?' bg_image="'+omsc_shortcodes_attr_esc(bg_image)+'"':'')+
+		(bg_image && bg_image_pos?' bg_image_pos="'+omsc_shortcodes_attr_esc(bg_image_pos)+'"':'')+
+		(icon?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+
+		(icon && icon_style?' icon_style="'+omsc_shortcodes_attr_esc(icon_style)+'"':'')+
+		(icon && icon_shape?' icon_shape="'+omsc_shortcodes_attr_esc(icon_shape)+'"':'')+
+		(align?' align="'+omsc_shortcodes_attr_esc(align)+'"':'')+
+		(text_color?' text_color="'+omsc_shortcodes_attr_esc(text_color)+'"':'')+
 		(height?' height="'+height+'"':'')+
-	']'+content+'[/box]';
+	']'+omsc_shortcodes_content_esc(content)+'[/box]';
 EOF;
 
 $omsc_shortcodes_generators['biginfobox'] = <<<EOF
@@ -243,9 +275,15 @@ $omsc_shortcodes_generators['biginfobox'] = <<<EOF
 	var target=$('#omsc_biginfobox_button_target').val();
 	var layout=$('#omsc_biginfobox_layout').val();
 	
-	title=omsc_shortcodes_attr_esc(title);
-
-	code.before='[biginfobox '+(color?'color="'+color+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(title!=''?' title="'+title+'"':'')+(href!=''?' href="'+href+'"':'')+(button_title!=''?' button_title="'+button_title+'"':'')+(target!=''?' target="'+target+'"':'')+(layout?' layout="'+layout+'"':'')+']'+content+'[/biginfobox]';
+	code.before='[biginfobox '+(color?'color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+		(textcolor!=''?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+
+		(title!=''?' title="'+omsc_shortcodes_attr_esc(title)+'"':'')+
+		(href!=''?' href="'+omsc_shortcodes_attr_esc(href)+'"':'')+
+		(button_title!=''?' button_title="'+omsc_shortcodes_attr_esc(button_title)+'"':'')+
+		(target!=''?' target="'+omsc_shortcodes_attr_esc(target)+'"':'')+
+		(layout?' layout="'+omsc_shortcodes_attr_esc(layout)+'"':'')+']'+
+		omsc_shortcodes_content_esc(content)+
+		'[/biginfobox]';
 	
 EOF;
 
@@ -270,7 +308,11 @@ $omsc_shortcodes_generators['icons'] = <<<EOF
 	
 	var size=$('#omsc_icon_size').val();
 
-	code.before='[icon'+(icon!=''?' icon="'+icon+'"':'')+(size!=''?' size="'+size+'"':'')+(color?' color="'+color+'"':'')+(bordercolor?' bordercolor="'+bordercolor+'"':'')+(bgcolor?' bgcolor="'+bgcolor+'"':'')+']';
+	code.before='[icon'+(icon!=''?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+
+		(size!=''?' size="'+omsc_shortcodes_attr_esc(size)+'"':'')+
+		(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+		(bordercolor?' bordercolor="'+omsc_shortcodes_attr_esc(bordercolor)+'"':'')+
+		(bgcolor?' bgcolor="'+omsc_shortcodes_attr_esc(bgcolor)+'"':'')+']';
 EOF;
 
 $omsc_shortcodes_generators['marker'] = <<<EOF
@@ -279,9 +321,11 @@ $omsc_shortcodes_generators['marker'] = <<<EOF
 	var textcolor=$('#omsc_marker_textcolor').val();
 	var tooltip=$('#omsc_marker_tooltip').val();
 	
-	tooltip=omsc_shortcodes_attr_esc(tooltip);
-	
-	code.before='[marker '+(color!=''?' color="'+color+'"':'')+(textcolor!=''?' textcolor="'+textcolor+'"':'')+(tooltip!=''?' tooltip="'+tooltip+'"':'')+']'+title+'[/marker]';
+	code.before='[marker '+(color!=''?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')+
+		(textcolor!=''?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')+
+		(tooltip!=''?' tooltip="'+omsc_shortcodes_attr_esc(tooltip)+'"':'')+']'+
+		omsc_shortcodes_content_esc(title)+
+		'[/marker]';
 	
 EOF;
 
@@ -297,7 +341,7 @@ $omsc_shortcodes_generators['bullets'] = <<<EOF
 	if(count < 1)
 		count = 1;
 
-	code.before='[custom_list'+(icon!=''?' icon="'+icon+'"':'')+(color?' iconcolor="'+color+'"':'')+']'+"<ul>";
+	code.before='[custom_list'+(icon!=''?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+(color?' iconcolor="'+omsc_shortcodes_attr_esc(color)+'"':'')+']'+"<ul>";
 	for(i=1;i<=count;i++)
 		code.before+='<li>Item '+i+'</li>';
 	code.before+='</ul>[/custom_list]';
@@ -317,7 +361,7 @@ $omsc_shortcodes_generators['bullets_individual'] = <<<EOF
 
 	code.before='[ul]<br />';
 	for(i=1;i<=count;i++)
-		code.before+='[li'+(icon!=''?' icon="'+icon+'"':'')+(color?' iconcolor="'+color+'"':'')+']Item '+i+'[/li]<br />';
+		code.before+='[li'+(icon!=''?' icon="'+omsc_shortcodes_attr_esc(icon)+'"':'')+(color?' iconcolor="'+omsc_shortcodes_attr_esc(color)+'"':'')+']Item '+i+'[/li]<br />';
 	code.before+='[/ul]';
 EOF;
 
@@ -368,7 +412,7 @@ $omsc_shortcodes_generators['video'] = <<<EOF
 	if(isNaN(maxwidth))
 		maxwidth=0;
 		
-	code.before='[video_embed'+(maxwidth>0?' maxwidth="'+maxwidth+'"':'')+']'+vcode+'[/video_embed]';
+	code.before='[video_embed'+(maxwidth>0?' maxwidth="'+maxwidth+'"':'')+']'+omsc_shortcodes_content_esc(vcode)+'[/video_embed]';
 	
 EOF;
 
@@ -391,7 +435,7 @@ $omsc_shortcodes_generators['map'] = <<<EOF
 	}
 
 	if(type)
-		code.before='[map type="'+type+'"'+(maxwidth>0?' maxwidth="'+maxwidth+'"':'')+']'+content+'[/map]';
+		code.before='[map type="'+type+'"'+(maxwidth>0?' maxwidth="'+maxwidth+'"':'')+']'+omsc_shortcodes_content_esc(content)+'[/map]';
 
 EOF;
 
@@ -399,9 +443,7 @@ $omsc_shortcodes_generators['blockquote'] = <<<EOF
 	var text=$('#omsc_blockquote_text').val();
 	var author=$('#omsc_blockquote_author').val();
 	
-	author=omsc_shortcodes_attr_esc(author);
-	
-	code.before='[blockquote'+(author!=''?' author="'+author+'"':'')+']'+text+'[/blockquote]';
+	code.before='[blockquote'+(author!=''?' author="'+omsc_shortcodes_attr_esc(author)+'"':'')+']'+omsc_shortcodes_content_esc(text)+'[/blockquote]';
 	
 EOF;
 
@@ -431,7 +473,7 @@ $omsc_shortcodes_generators['visibility'] = <<<EOF
 	//	show.push('mobile-portrait');
 	
 	if(show.length)
-		code.before='[visibility display="'+show.join(' ')+'"]'+vcode+'[/visibility]';
+		code.before='[visibility display="'+show.join(' ')+'"]'+omsc_shortcodes_content_esc(vcode)+'[/visibility]';
 	
 EOF;
 
@@ -470,7 +512,12 @@ $omsc_shortcodes_generators['recent_posts'] = <<<EOF
 		category='';
 	}					
 	
-	code.before='[recent_posts'+(ids?' ids="'+ids+'"':'')+(count?' count="'+count+'"':'')+(date?' date="true"':'')+(thumbnail?' thumbnail="true"':'')+(excerpt?' excerpt="true"':'')+(category!=0&&category!='-1'?' category="'+category+'"':'')+']';
+	code.before='[recent_posts'+(ids?' ids="'+omsc_shortcodes_attr_esc(ids)+'"':'')+
+		(count?' count="'+omsc_shortcodes_attr_esc(count)+'"':'')+
+		(date?' date="true"':'')+
+		(thumbnail?' thumbnail="true"':'')+
+		(excerpt?' excerpt="true"':'')+
+		(category!=0&&category!='-1'?' category="'+omsc_shortcodes_attr_esc(category)+'"':'')+']';
 
 EOF;
 
@@ -491,20 +538,20 @@ $omsc_shortcodes_generators['full_width'] = <<<EOF
 	var no_paddings=$('#omsc_fullwidth_no_paddings').attr('checked');
 	
 	code.before='[full_width_section'
-		+(color?' color="'+color+'"':'')
-		+(textcolor?' textcolor="'+textcolor+'"':'')
+		+(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')
+		+(textcolor?' textcolor="'+omsc_shortcodes_attr_esc(textcolor)+'"':'')
 		+(no_paddings?' no_paddings="true"':'')
-		+(image?' image="'+image+'"':'')
-		+(image&&bgpos?' bgpos="'+bgpos+'"':'')
-		+(image&&bgatt?' bgatt="'+bgatt+'"':'')
-		+(video?' video="'+video+'"':'')
-		+(video_mp4?' video_mp4="'+video_mp4+'"':'')
-		+(video_m4v?' video_m4v="'+video_m4v+'"':'')
-		+(video_webm?' video_webm="'+video_webm+'"':'')
-		+(video_ogv?' video_ogv="'+video_ogv+'"':'')
-		+(video_wmv?' video_wmv="'+video_wmv+'"':'')
-		+(video_flv?' video_flv="'+video_flv+'"':'')
-	+']'+text+'[/full_width_section]';
+		+(image?' image="'+omsc_shortcodes_attr_esc(image)+'"':'')
+		+(image&&bgpos?' bgpos="'+omsc_shortcodes_attr_esc(bgpos)+'"':'')
+		+(image&&bgatt?' bgatt="'+omsc_shortcodes_attr_esc(bgatt)+'"':'')
+		+(video?' video="'+omsc_shortcodes_attr_esc(video)+'"':'')
+		+(video_mp4?' video_mp4="'+omsc_shortcodes_attr_esc(video_mp4)+'"':'')
+		+(video_m4v?' video_m4v="'+omsc_shortcodes_attr_esc(video_m4v)+'"':'')
+		+(video_webm?' video_webm="'+omsc_shortcodes_attr_esc(video_webm)+'"':'')
+		+(video_ogv?' video_ogv="'+omsc_shortcodes_attr_esc(video_ogv)+'"':'')
+		+(video_wmv?' video_wmv="'+omsc_shortcodes_attr_esc(video_wmv)+'"':'')
+		+(video_flv?' video_flv="'+omsc_shortcodes_attr_esc(video_flv)+'"':'')
+	+']'+omsc_shortcodes_content_esc(text)+'[/full_width_section]';
 
 EOF;
 
@@ -518,13 +565,13 @@ $omsc_shortcodes_generators['portfolio'] = <<<EOF
 	var ids=$('#omsc_portfolio_ids').val();
 	
 	code.before='[portfolio'
-		+(count_?' count="'+count_+'"':'')
-		+(layout?' layout="'+layout+'"':'')
-		+(size?' size="'+size+'"':'')
-		+(ratio?' ratio="'+ratio+'"':'')
-		+(category && category != '0'?' category="'+category+'"':'')
+		+(count_?' count="'+omsc_shortcodes_attr_esc(count_)+'"':'')
+		+(layout?' layout="'+omsc_shortcodes_attr_esc(layout)+'"':'')
+		+(size?' size="'+omsc_shortcodes_attr_esc(size)+'"':'')
+		+(ratio?' ratio="'+omsc_shortcodes_attr_esc(ratio)+'"':'')
+		+(category && category != '0'?' category="'+omsc_shortcodes_attr_esc(category)+'"':'')
 		+(randomize?' randomize="true"':'')
-		+(ids?' ids="'+ids+'"':'')
+		+(ids?' ids="'+omsc_shortcodes_attr_esc(ids)+'"':'')
 	+']';
 
 EOF;
@@ -544,13 +591,13 @@ $omsc_shortcodes_generators['counter'] = <<<EOF
 
 	if(number != '') {
 		code.before='[counter'
-			+(number?' number="'+number+'"':'')
-			+(prefix?' prefix="'+prefix+'"':'')
-			+(suffix?' suffix="'+suffix+'"':'')
-			+(title?' title="'+title+'"':'')
-			+(color?' color="'+color+'"':'')
-			+(size?' size="'+size+'"':'')
-			+(animation!=''?' animation="'+animation+'"':'')
+			+(number?' number="'+omsc_shortcodes_attr_esc(number)+'"':'')
+			+(prefix?' prefix="'+omsc_shortcodes_attr_esc(prefix)+'"':'')
+			+(suffix?' suffix="'+omsc_shortcodes_attr_esc(suffix)+'"':'')
+			+(title?' title="'+omsc_shortcodes_attr_esc(title)+'"':'')
+			+(color?' color="'+omsc_shortcodes_attr_esc(color)+'"':'')
+			+(size?' size="'+omsc_shortcodes_attr_esc(size)+'"':'')
+			+(animation!=''?' animation="'+omsc_shortcodes_attr_esc(animation)+'"':'')
 		+']';
 	}
 

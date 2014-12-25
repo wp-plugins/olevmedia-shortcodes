@@ -133,7 +133,15 @@ function omsc_init_code_generator($container) {
 
 function omsc_shortcodes_attr_esc(str) {
 	
-	str=str.replace(/"/g,'\\"');
+	str=str.replace(/"/g,'\'');
+	str=str.replace(/<(\s*\/?\s*script)/ig,'&lt;$1');
+	
+	return str;
+}
+
+function omsc_shortcodes_content_esc(str) {
+	
+	str=str.replace(/<(\s*\/?\s*script)/ig,'&lt;$1');
 	
 	return str;
 }

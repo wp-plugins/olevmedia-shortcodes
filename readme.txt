@@ -2,8 +2,8 @@
 Contributors: Olevmedia
 Tags: shortcodes, shortcode, visual, accordion, toggle, tab, tabs, box, button, buttons, counter, columns, dropcaps, divider, icons, infoboxes, infobox, list, lists, map, marker, table, pricing tables, responsive, responsive video, video
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.1.6
+Tested up to: 4.1
+Stable tag: 1.1.7
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -76,6 +76,9 @@ Automatic updates should work like a charm.
 7. An example of Pricing Tables shortcode
 
 == Changelog ==
+
+= 1.1.7 - 2014-12-25 =
+* Security fix
 
 = 1.1.6 - 2014-11-23 =
 * Pricing table shortcode issue with WP 4.0.1 fix

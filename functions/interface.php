@@ -26,16 +26,16 @@ add_action( 'admin_enqueue_scripts', 'omsc_admin_enqueue_scripts' );
 function omsc_popup_callback() {
 
 	echo '<div class="omsc-popup-wrapper">';
-		echo '<div class="omsc-popup-title"><h2>'. __('Insert shortcode: ', 'om_shortcodes') . $_POST['title'] . '</h2></div>';
+		echo '<div class="omsc-popup-title"><h2>'. __('Insert shortcode: ', 'om_shortcodes') . esc_html($_POST['title']) . '</h2></div>';
 		echo '<div class="omsc-clearfix">';
 			echo '<div class="omsc-popup-button-box omsc-popup-button-box-top">';
-				echo '<input type="button" class="omsc-popup-submit-button button button-primary button-large" data-shortcode-id="'.$_POST['id'].'" value="'.__('Insert Shortcode', 'om_shortcodes').'" />';
+				echo '<input type="button" class="omsc-popup-submit-button button button-primary button-large" data-shortcode-id="'.esc_attr($_POST['id']).'" value="'.__('Insert Shortcode', 'om_shortcodes').'" />';
 			echo '</div>';
 			echo '<div class="omsc-popup-options-box">';
 			echo omsc_shortcodes_options($_POST['id']);
 			echo '</div>';
 			echo '<div class="omsc-popup-button-box omsc-popup-button-box-bottom">';
-				echo '<input type="button" class="omsc-popup-submit-button button button-primary button-large" data-shortcode-id="'.$_POST['id'].'" value="'.__('Insert Shortcode', 'om_shortcodes').'" />';
+				echo '<input type="button" class="omsc-popup-submit-button button button-primary button-large" data-shortcode-id="'.esc_attr($_POST['id']).'" value="'.__('Insert Shortcode', 'om_shortcodes').'" />';
 			echo '</div>';
 		echo '</div>';
 	echo '</div>';

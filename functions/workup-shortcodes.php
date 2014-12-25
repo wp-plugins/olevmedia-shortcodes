@@ -1200,7 +1200,7 @@ function omsc_sc_pricing( $atts, $content = null ) {
 	$cells=array();
 	//$max_row=0;
 	
-	$content = preg_replace('/=&#8221;(.*?)&#8221;/', '="$1"', $content);
+	$content = preg_replace('/=&#(8220|8221|171|187|8216|8217);(.*?)&#(8220|8221|171|187|8216|8217);/', '="$2"', $content);
 	
 	if(preg_match_all('#[\s\S]*?\[pricing_column([^]]*)\]([\s\S]*?)\[/pricing_column\][\s\S]*?#',$content,$cols)) {
 		

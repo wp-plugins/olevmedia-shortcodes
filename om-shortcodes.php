@@ -4,13 +4,13 @@
  * Plugin Name: Olevmedia Shortcodes
  * Plugin URI: http://olevmedia.com/
  * Description: Olevmedia Shortcodes plugin adds a button to editor, which provides you plenty of handy shortcodes (buttons, icons, lists, infoboxes and more)
- * Version: 1.1.6
+ * Version: 1.1.7
  * Author: Olevmedia
  * Author URI: http://olevmedia.com/
  */
 
 $GLOBALS['omShortcodesPlugin'] = array(
-	'version' => '1.1.6',
+	'version' => '1.1.7',
 	'path' => plugin_dir_path( __FILE__ ),
 	'path_url' => plugin_dir_url( __FILE__ ),
 	'config' => array(
