@@ -58,7 +58,8 @@ omShortcodes.modules.tooltips = {
 					$tt.stop();
 				} else {
 					var pos=jQuery(this).offset();
-					$tt=jQuery('<div class="omsc-tooltip"><div class="omsc-tooltip-inner">'+text+'</div></div>');
+					$tt=jQuery('<div class="omsc-tooltip"><div class="omsc-tooltip-inner"></div></div>');
+					$tt.find('.omsc-tooltip-inner').text(text);
 					jQuery(this).data('omsc-tooltip', $tt);
 					$tt.appendTo('body');
 					$tt.css('left',pos.left + Math.round(jQuery(this).outerWidth()/2));
@@ -221,7 +222,7 @@ omShortcodes.modules.counter = {
 		var interval=30;
 		
 		function om_tick(args) {
-			args.obj.html([args.prefix, args.current, args.suffix].join(''));
+			args.obj.text([args.prefix, args.current, args.suffix].join(''));
 			if(args.current < args.count) {
 				args.current+=args.step;
 				if(args.current > args.count)

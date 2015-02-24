@@ -31,7 +31,7 @@ function omsc_enqueue_scripts() {
 		}
 	}
 	
-	wp_enqueue_script('omsc-shortcodes', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/js/shortcodes'.$min_postfix.'.js', array('jquery'), false, $GLOBALS['omShortcodesPlugin']['config']['scripts_in_footer']);
+	wp_enqueue_script('omsc-shortcodes', $GLOBALS['omShortcodesPlugin']['path_url'].'assets/js/shortcodes'.$min_postfix.'.js', array('jquery'), $GLOBALS['omShortcodesPlugin']['version'], $GLOBALS['omShortcodesPlugin']['config']['scripts_in_footer']);
 }
 add_action('wp_enqueue_scripts', 'omsc_enqueue_scripts');
 
